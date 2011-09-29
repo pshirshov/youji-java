@@ -8,7 +8,16 @@
     <artifactId>youJi</artifactId>
     <version>1.0</version>
 
+    <repositories>
+        <repository>
+          <id>typesafe</id>
+          <name>Typesafe Repository</name>
+          <url>http://repo.typesafe.com/typesafe/releases/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+        <!-- smack -->
         <dependency>
             <groupId>org.igniterealtime.smack</groupId>
             <artifactId>smack</artifactId>
@@ -43,6 +52,19 @@
             <artifactId>smackx</artifactId>
             <version>3.2.1</version>
             <classifier>javadoc</classifier>
+        </dependency>
+
+        <!-- akka -->
+        <dependency>
+          <groupId>se.scalablesolutions.akka</groupId>
+          <artifactId>akka-actor</artifactId>
+          <version>1.2</version>
+        </dependency>
+        <dependency>
+          <groupId>se.scalablesolutions.akka</groupId>
+          <artifactId>akka-actor</artifactId>
+          <version>1.2</version>
+          <classifier>sources</classifier>
         </dependency>
     </dependencies>
 

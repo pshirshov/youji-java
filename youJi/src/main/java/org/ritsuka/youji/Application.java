@@ -1,26 +1,28 @@
 package org.ritsuka.youji;
 
-import org.jivesoftware.smack.Connection;
-import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.XMPPException;
+import akka.actor.ActorRef;
+import akka.actor.UntypedActor;
+import akka.actor.UntypedActorFactory;
 
-public class Application {
-    public static void main(final String[] args1) {
-        System.out.println("Hi");
-        // Create a connection to the jabber.org server.
-        Connection conn1 = new XMPPConnection("jabber.org");
-        try {
-            conn1.connect();
-            conn1.login("huipizda", "pizdahui", "hooita");
-        } catch (XMPPException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        /*conn1.connect();
+import java.util.concurrent.CountDownLatch;
 
-        // Create a connection to the jabber.org server on a specific port.
-        ConnectionConfiguration config = new ConnectionConfiguration("jabber.org", 5222);
-        Connection conn2 = new XMPPConnection(config);
-        conn2.connect();*/
+import static akka.actor.Actors.*;
+
+public class Application  {
+    public static void main(final String[] args1) throws InterruptedException {
+        final CountDownLatch latch = new CountDownLatch(1);
+        //master.tell(new Calculate());
+     /*   System.out.println("Hi");
+        ActorRef myActor = actorOf(XMPPWorker.class);
+        myActor.start();
+        myActor.tell(new AccountData());
+        System.out.println("Bye");*/
+        ActorRef master = actorOf(new UntypedActorFactory() {
+      public UntypedActor create() {
+        return new Supervisor(latch);
+      }
+    }).start();
+        master.tell(new AccountData());
+        latch.await();
     }
 }
