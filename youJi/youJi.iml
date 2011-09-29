@@ -16,6 +16,7 @@
     <orderEntry type="library" name="Maven: org.igniterealtime.smack:smackx:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.igniterealtime.smack:smackx:sources:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.igniterealtime.smack:smackx:javadoc:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.igniterealtime.smack:smackx-debug:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: se.scalablesolutions.akka:akka-actor:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.9.1" level="project" />
     <orderEntry type="library" name="Maven: se.scalablesolutions.akka:akka-actor:sources:1.2" level="project" />

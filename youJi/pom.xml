@@ -54,6 +54,13 @@
             <classifier>javadoc</classifier>
         </dependency>
 
+       <dependency>
+           <groupId>org.igniterealtime.smack</groupId>
+           <artifactId>smackx-debug</artifactId>
+           <version>3.2.1</version>
+       </dependency>
+
+
         <!-- akka -->
         <dependency>
           <groupId>se.scalablesolutions.akka</groupId>

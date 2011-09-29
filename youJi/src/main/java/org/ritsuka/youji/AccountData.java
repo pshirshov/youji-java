@@ -1,40 +1,47 @@
 package org.ritsuka.youji;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Date: 9/29/11
  * Time: 8:30 PM
  */
 public class AccountData {
-    public String login()
-    {
-        return   "youji_sagan";
+    private String login = null;
+
+    AccountData(String a_login) {
+        login = a_login;
     }
-    public String password()
-    {
+
+    public String login() {
+        return login;
+    }
+
+    public String password() {
         return "BNasdfhk87623#";
     }
-    public String server()
-    {
+
+    public String server() {
         return "draugr.de";
     }
 
-    public String resource()
-    {
+    public String resource() {
         return "hooita";
     }
 
-    public String alternativeResource(String rejected)
-    {
+    /*public String alternativeResource(String rejected) {
         return rejected + "_";
-    }
+    }*/
 
-    public ArrayList<ConferenceData> conferences()
-    {
-        ArrayList<ConferenceData> conferenceDatas =  new ArrayList<ConferenceData>();
-        conferenceDatas.add(new ConferenceData());
+    public List<ConferenceData> conferences() {
+        ArrayList<ConferenceData> conferenceDatas = new ArrayList<ConferenceData>();
         conferenceDatas.add(new ConferenceData());
         return conferenceDatas;
     }
+
+    public String toString() {
+        return login() + "@" + server() + "/" + Integer.toHexString(hashCode());
+    }
+
 }

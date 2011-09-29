@@ -15,17 +15,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53f9625e-24cd-4f15-9ff5-e2421d2dfecc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_scala_lang_scala_library_2_9_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__se_scalablesolutions_akka_akka_actor_1_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__se_scalablesolutions_akka_akka_actor_sources_1_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/AccountData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/MUCMessageListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Supervisor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/XMPPWorker.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_igniterealtime_smack_smackx_debug_3_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceState.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/YConnectionListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/pom.xml" afterPath="$PROJECT_DIR$/youJi/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/AccountData.java" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/AccountData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Application.java" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Application.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceData.java" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/MUCMessageListener.java" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/MUCMessageListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Supervisor.java" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Supervisor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/XMPPWorker.java" afterPath="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/XMPPWorker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/youJi/youJi.iml" afterPath="$PROJECT_DIR$/youJi/youJi.iml" />
     </list>
     <ignored path="youJi_bot.iws" />
@@ -85,33 +85,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/youJi/pom.xml">
+      <file leaf-file-name="Supervisor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Supervisor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.0">
+            <state line="54" column="42" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Application.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Application.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Application.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="37" selection-start="808" selection-end="808" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Supervisor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Supervisor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="0" selection-start="1498" selection-end="1557" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="20" column="10" selection-start="631" selection-end="631" vertical-scroll-proportion="0.47619048">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -119,16 +106,7 @@
       <file leaf-file-name="AccountData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/AccountData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="81" selection-start="403" selection-end="403" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConferenceData.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="256" selection-end="316" vertical-scroll-proportion="0.608229">
+            <state line="34" column="7" selection-start="601" selection-end="601" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -137,7 +115,16 @@
       <file leaf-file-name="XMPPWorker.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/XMPPWorker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="47" selection-start="1183" selection-end="1183" vertical-scroll-proportion="0.0">
+            <state line="25" column="26" selection-start="748" selection-end="748" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConferenceState.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="54" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -146,10 +133,8 @@
       <file leaf-file-name="MUCMessageListener.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/MUCMessageListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="43" selection-start="334" selection-end="334" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="9" column="38" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -170,13 +155,15 @@
       <list>
         <option value="$USER_HOME$/.m2/settings.xml" />
         <option value="$PROJECT_DIR$/youJi/profiles.xml" />
-        <option value="$PROJECT_DIR$/youJi/pom.xml" />
-        <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Application.java" />
         <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Supervisor.java" />
-        <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceData.java" />
+        <option value="$PROJECT_DIR$/youJi/pom.xml" />
+        <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/YConnectionListener.java" />
         <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/AccountData.java" />
+        <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceState.java" />
+        <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceData.java" />
         <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/XMPPWorker.java" />
         <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/MUCMessageListener.java" />
+        <option value="$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Application.java" />
       </list>
     </option>
   </component>
@@ -270,6 +257,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -284,7 +272,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -369,7 +356,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.lookFeel" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.General" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -377,9 +364,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.Application">
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
@@ -522,7 +509,7 @@
     <configuration default="false" name="Application" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.ritsuka.youji.Application" />
-      <option name="VM_PARAMETERS" value="" />
+      <option name="VM_PARAMETERS" value="-Dsmack.debugEnabled=true" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -532,7 +519,13 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="youJi" />
       <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="49273" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -575,23 +568,23 @@
     <frame x="1278" y="0" width="1875" height="1057" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39956093" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IvyIDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18825467" sideWeight="0.22173436" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3194292" sideWeight="0.6695939" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18825467" sideWeight="0.37211856" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16630077" sideWeight="0.6783754" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18825467" sideWeight="0.43907794" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33040616" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18825467" sideWeight="0.2974753" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32162458" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -680,122 +673,100 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="uml://MODULES/mdl-youJi">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>MODULES</ID>
-          <OriginalElement>mdl-youJi</OriginalElement>
-          <nodes>
-            <node x="" y="">mdl-youJi</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="34.0" y="15.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Libraries</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven.jar!/org/jetbrains/idea/maven/dom/maven-4.0.0.xsd">
+    <entry file="jar://$MAVEN_REPOSITORY$/se/scalablesolutions/akka/akka-actor/1.2/akka-actor-1.2.jar!/akka/actor/UntypedActor.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="772" column="6" selection-start="38318" selection-end="38318" vertical-scroll-proportion="0.33333334" />
+        <state line="6" column="59" selection-start="2549" selection-end="2549" vertical-scroll-proportion="0.18450184" />
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/igniterealtime/smack/smack/3.2.1/smack-3.2.1-sources.jar!/org/jivesoftware/smack/Connection.java">
+    <entry file="jar:///etc/java-config-2/current-system-vm/src.zip!/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="209" column="38" selection-start="7870" selection-end="7870" vertical-scroll-proportion="0.8060879" />
+        <state line="217" column="0" selection-start="10311" selection-end="10417" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="uml://MAVEN/youJi:youJi:1.0">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>MAVEN</ID>
-          <OriginalElement>youJi:youJi:1.0</OriginalElement>
-          <nodes>
-            <node x="" y="">se.scalablesolutions.akka:akka-actor:jar:1.2/org.scala-lang:scala-library:jar:2.9.1</node>
-            <node x="" y="">org.igniterealtime.smack:smack:jar:sources:3.2.1</node>
-            <node x="" y="">org.igniterealtime.smack:smackx:jar:sources:3.2.1</node>
-            <node x="" y="">youJi:youJi:1.0</node>
-            <node x="" y="">se.scalablesolutions.akka:akka-actor:jar:sources:1.2/org.scala-lang:scala-library:jar:2.9.1</node>
-            <node x="" y="">org.igniterealtime.smack:smack:jar:3.2.1</node>
-            <node x="" y="">org.igniterealtime.smack:smackx:jar:javadoc:3.2.1</node>
-            <node x="" y="">se.scalablesolutions.akka:akka-actor:jar:javadoc:1.2</node>
-            <node x="" y="">org.igniterealtime.smack:smack:jar:javadoc:3.2.1</node>
-            <node x="" y="">se.scalablesolutions.akka:akka-actor:jar:1.2</node>
-            <node x="" y="">se.scalablesolutions.akka:akka-actor:jar:sources:1.2</node>
-            <node x="" y="">org.igniterealtime.smack:smackx:jar:3.2.1</node>
-            <node x="" y="">se.scalablesolutions.akka:akka-actor:jar:javadoc:1.2/org.scala-lang:scala-library:jar:2.9.1</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="172.0" y="179.5" />
-          <SelectedNodes />
-          <Categories />
-          <VISIBILITY>All</VISIBILITY>
-        </state>
+    <entry file="jar://$MAVEN_REPOSITORY$/se/scalablesolutions/akka/akka-actor/1.2/akka-actor-1.2.jar!/akka/actor/Scheduler.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="174" selection-start="7886" selection-end="7886" vertical-scroll-proportion="-11.56" />
+      </provider>
+    </entry>
+    <entry file="jar:///etc/java-config-2/current-system-vm/src.zip!/java/util/concurrent/TimeUnit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="16" selection-start="2775" selection-end="2787" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/igniterealtime/smack/smack/3.2.1/smack-3.2.1-sources.jar!/org/jivesoftware/smack/util/PacketParserUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="668" column="30" selection-start="27238" selection-end="27238" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/igniterealtime/smack/smack/3.2.1/smack-3.2.1-sources.jar!/org/jivesoftware/smack/PacketReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="0" selection-start="2249" selection-end="2249" vertical-scroll-proportion="0.75661373" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/youJi/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.0">
+        <state line="55" column="58" selection-start="1913" selection-end="1913" vertical-scroll-proportion="0.49382716">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/se/scalablesolutions/akka/akka-actor/1.2/akka-actor-1.2.jar!/akka/actor/UntypedActor.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="59" selection-start="2549" selection-end="2549" vertical-scroll-proportion="0.18450184">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Application.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="37" selection-start="808" selection-end="808" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Supervisor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="1498" selection-end="1557" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="54" column="42" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/XMPPWorker.java">
+    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/YConnectionListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="47" selection-start="1183" selection-end="1183" vertical-scroll-proportion="0.0">
+        <state line="31" column="28" selection-start="746" selection-end="746" vertical-scroll-proportion="0.50617284">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/MUCMessageListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="43" selection-start="334" selection-end="334" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/AccountData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="81" selection-start="403" selection-end="403" vertical-scroll-proportion="0.0">
+        <state line="34" column="7" selection-start="601" selection-end="601" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="256" selection-end="316" vertical-scroll-proportion="0.608229">
+        <state line="22" column="20" selection-start="389" selection-end="389" vertical-scroll-proportion="0.7482993">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/igniterealtime/smack/smackx/3.2.1/smackx-3.2.1-sources.jar!/org/jivesoftware/smackx/muc/MultiUserChat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="13" selection-start="3191" selection-end="3191" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/ConferenceState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="54" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/XMPPWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="26" selection-start="748" selection-end="748" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/MUCMessageListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="38" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/youJi/src/main/java/org/ritsuka/youji/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="10" selection-start="631" selection-end="631" vertical-scroll-proportion="0.47619048">
           <folding />
         </state>
       </provider>
