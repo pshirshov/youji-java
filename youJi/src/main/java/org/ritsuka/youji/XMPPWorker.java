@@ -8,12 +8,18 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.youji.muc.ConferenceData;
+import org.ritsuka.youji.muc.ConferenceState;
+import org.ritsuka.youji.muc.MUCMessageListenerThreaded;
+import org.ritsuka.youji.muc.MUCMessageListenerAk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static akka.actor.Actors.actorOf;
 
 /**
  * Date: 9/29/11
@@ -68,7 +74,7 @@ public class XMPPWorker extends UntypedActor {
         ConferenceState state = conferences.get(roomJid);
         if (null == state) {
             MultiUserChat muc = new MultiUserChat(connection, roomJid);
-            muc.addMessageListener(new MUCMessageListener(this, muc));
+            muc.addMessageListener(new MUCMessageListenerThreaded((ActorRef)self(), muc));
             state = new ConferenceState(conf, muc);
             conferences.put(roomJid, state);
         }
@@ -89,12 +95,12 @@ public class XMPPWorker extends UntypedActor {
                 if (error.getCode() == 407) {
                     Integer pauseBeforeNextAttempt = state.pauseBeforeNextAttempt();
                     log().debug("Pause: " + pauseBeforeNextAttempt);
-                    Scheduler.scheduleOnce((ActorRef) this.self(), conf, pauseBeforeNextAttempt, TimeUnit.MILLISECONDS);
+                    Scheduler.scheduleOnce((ActorRef) self(), conf, pauseBeforeNextAttempt, TimeUnit.MILLISECONDS);
                 } else if (error.getCode() == 409) {
                     Integer pauseBeforeNextAttempt = state.pauseBeforeNextAttempt();
                     log().debug("Pause: " + pauseBeforeNextAttempt);
                     state.nickConflict();
-                    Scheduler.scheduleOnce((ActorRef) this.self(), conf, pauseBeforeNextAttempt, TimeUnit.MILLISECONDS);
+                    Scheduler.scheduleOnce((ActorRef) self(), conf, pauseBeforeNextAttempt, TimeUnit.MILLISECONDS);
                 }
             }
         }
@@ -107,12 +113,13 @@ public class XMPPWorker extends UntypedActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
-        /*if ((null != connection) && !connection.isConnected())
+        if (message instanceof MUCMessageListenerAk)
         {
-            conferences.clear();
-            connection = null;
-        }*/
-        if (message instanceof AccountData) {
+            MUCMessageListenerAk listenerAk = (MUCMessageListenerAk)message;
+            listenerAk.worker = this;
+            listenerAk.processPacketInActor();
+        }
+        else if (message instanceof AccountData) {
             log().debug(this + ":worker message: " + message.toString());
             account = (AccountData) message;
             logon();

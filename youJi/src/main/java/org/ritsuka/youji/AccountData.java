@@ -1,5 +1,7 @@
 package org.ritsuka.youji;
 
+import org.ritsuka.youji.muc.ConferenceData;
+
 import java.util.ArrayList;
 import java.util.List;
 
