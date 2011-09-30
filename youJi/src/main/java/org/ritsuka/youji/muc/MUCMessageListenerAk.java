@@ -6,24 +6,27 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.ritsuka.youji.XMPPWorker;
+import org.ritsuka.youji.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MUCMessageListenerAk {
-    public Packet packet;
-    public XMPPWorker worker;
-    public MultiUserChat chat;
+    private Packet packet;
+    private XMPPWorker worker;
+    private MultiUserChat chat;
 
-    private Logger log()
-    {
-        return LoggerFactory.getLogger(toString());
+    private Log log() {
+        return new Log(LoggerFactory.getLogger(toString()));
     }
 
     public String toString() {
-        return String.format("%s:%s/%s"
-                , worker.connection().getUser()
-                , chat.getRoom()
-                , chat.getNickname());
+        StringBuilder sb = new StringBuilder();
+        sb.append(worker.connection().getUser());
+        sb.append(":");
+        sb.append(chat.getRoom());
+        sb.append("/");
+        sb.append(chat.getNickname());
+        return sb.toString();
     }
 
     public void processPacketInActor()
@@ -34,10 +37,10 @@ public class MUCMessageListenerAk {
         //String confName = StringUtils.parseName(from);
         String jid = StringUtils.parseBareAddress(from);
 
-        log().debug(String.format("%s in %s: %s", nick, jid, message.getBody()));
-
         String body = message.getBody();
-        try {
+        log().debug("{} in {}: {}", nick, jid, body);
+
+        /*try {
             if (body.length() < 10)
             {
                 String answer = String.format("Ходят тут всякие илитарии навроде %s: блядь, пишут хуиту навроде '%s'",
@@ -47,7 +50,30 @@ public class MUCMessageListenerAk {
 
         } catch (XMPPException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        }*/
     }
 
+    public Packet getPacket() {
+        return packet;
+    }
+
+    public void setPacket(Packet packet) {
+        this.packet = packet;
+    }
+
+    public XMPPWorker getWorker() {
+        return worker;
+    }
+
+    public void setWorker(XMPPWorker worker) {
+        this.worker = worker;
+    }
+
+    public MultiUserChat getChat() {
+        return chat;
+    }
+
+    public void setChat(MultiUserChat chat) {
+        this.chat = chat;
+    }
 }

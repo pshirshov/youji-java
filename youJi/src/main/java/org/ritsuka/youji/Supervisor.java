@@ -1,8 +1,12 @@
 package org.ritsuka.youji;
 
 import akka.actor.ActorRef;
+import akka.actor.Actors;
 import akka.actor.UntypedActor;
-import org.slf4j.Logger;
+import akka.actor.UntypedActorFactory;
+import org.ritsuka.youji.event.AppShutdownEvent;
+import org.ritsuka.youji.event.RunXmppWorkerEvent;
+import org.ritsuka.youji.util.Log;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
@@ -10,61 +14,55 @@ import java.util.concurrent.CountDownLatch;
 
 import static akka.actor.Actors.actorOf;
 
+// TODO: shared JIDs list
+// TODO: shared config
+// TODO: reply actors+some kind of plugins
+// TODO: history in mongodb
+// TODO: blogging
+
 /**
  * Date: 9/29/11
  * Time: 8:48 PM
  */
 public class Supervisor extends UntypedActor {
-    private Logger log()
+    final Log log = new Log(LoggerFactory.getLogger("SV"));
+    private Log log()
     {
-        return LoggerFactory.getLogger(Supervisor.class);
+        return this.log;
     }
 
-    //private ActorRef router;
     private final CountDownLatch latch;
-
-    /*static class XMPPRouter extends UntypedLoadBalancer {
-        private final InfiniteIterator<ActorRef> workers;
-
-        public XMPPRouter(ActorRef[] workers) {
-            this.workers = new CyclicIterator<ActorRef>(asList(workers));
-        }
-
-        public InfiniteIterator<ActorRef> seq() {
-            return workers;
-        }
-    }*/
 
     ArrayList<ActorRef> workers = new ArrayList<ActorRef>();
 
-    public Supervisor(CountDownLatch latch) {
-        System.out.println("supervisor constructor");
+    static public UntypedActorFactory create(final CountDownLatch latch) {
+        return new UntypedActorFactory() {
+            public UntypedActor create() {
+                return new Supervisor(latch);
+            }
+        };
+    }
+    private Supervisor(CountDownLatch latch) {
         this.latch = latch;
-
-
-        // create the workers
-        /*final ActorRef[] workers = new ActorRef[1];
-       for (int i = 0; i < workers.length; ++i) {
-         workers[i] = ;
-       } */
-
-
-/*      // wrap them with a load-balancing router
-      router = actorOf(new UntypedActorFactory() {
-        public UntypedActor create() {
-          return new XMPPRouter(workers);
-        }
-      }).start();*/
     }
 
     @Override
     public void onReceive(Object message) throws Exception {
-        log().debug(toString() + ":message: " + message.toString());
+        log().debug("Message: {}", message);
+
         if (message instanceof AccountData) {
-            ActorRef worker = actorOf(XMPPWorker.class).start();
+            ActorRef worker = actorOf(XMPPWorker.create((AccountData)message)).start();
             workers.add(worker);
-            worker.tell(message, getContext());
-        } else
+            worker.tell(new RunXmppWorkerEvent(), getContext());
+        } else if (message instanceof AppShutdownEvent)
+        {
+            ActorRef[] workers = Actors.registry().actorsFor(XMPPWorker.class);
+            for (ActorRef worker:workers)
+                worker.stop();
+            log().debug("Supervisor ready to shutdown");
+            ((ActorRef)self()).stop();
+        }
+        else
             throw new IllegalArgumentException("Unknown message [" + message + "]");
     }
 
@@ -72,5 +70,13 @@ public class Supervisor extends UntypedActor {
     public void postStop() {
         log().debug("supervisor ended");
         latch.countDown();
+    }
+
+    public static ActorRef instance() {
+        ActorRef[] supervisors = Actors.registry().actorsFor(Supervisor.class);
+        assert 1 == supervisors.length;
+        for (ActorRef supervisor:supervisors)
+            return supervisor;
+        return null;
     }
 }
