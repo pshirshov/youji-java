@@ -1,5 +1,8 @@
 package org.ritsuka.youji;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Date: 9/29/11
  * Time: 9:15 PM

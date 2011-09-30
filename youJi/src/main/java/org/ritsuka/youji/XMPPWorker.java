@@ -8,6 +8,8 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,11 @@ import java.util.concurrent.TimeUnit;
  * Time: 7:51 PM
  */
 public class XMPPWorker extends UntypedActor {
+    private Logger log()
+    {
+        return LoggerFactory.getLogger(toString());
+    }
+
     private Connection connection = null;
     AccountData account;
     HashMap<String, ConferenceState> conferences = new HashMap<String, ConferenceState>();
@@ -27,7 +34,7 @@ public class XMPPWorker extends UntypedActor {
     }
     private void logon() throws XMPPException {
         if (null == connection) {
-            System.out.println("Logging in");
+            log().debug("Logging in");
             connection = new XMPPConnection(account.server());
             connection.connect();
             connection.login(account.login(), account.password(), account.resource());
@@ -35,7 +42,7 @@ public class XMPPWorker extends UntypedActor {
             /*connection.addPacketListener(new PacketListener() {
                 @Override
                 public void processPacket(Packet packet) {
-                    System.out.println("Packet: " + packet.toXML());
+                    log().debug("Packet: " + packet.toXML());
                 }
             }, new PacketFilter() {
                 @Override
@@ -61,6 +68,7 @@ public class XMPPWorker extends UntypedActor {
         ConferenceState state = conferences.get(roomJid);
         if (null == state) {
             MultiUserChat muc = new MultiUserChat(connection, roomJid);
+            muc.addMessageListener(new MUCMessageListener(this, muc));
             state = new ConferenceState(conf, muc);
             conferences.put(roomJid, state);
         }
@@ -73,33 +81,28 @@ public class XMPPWorker extends UntypedActor {
                 muc.join(state.nick(), conf.password());
             else
                 muc.join(state.nick());
-            success = true;
+            state.success();
         } catch (XMPPException e) {
-            System.out.println(e.toString());
+            log().debug(e.toString());
             XMPPError error = e.getXMPPError();
             if (null != error) {
                 if (error.getCode() == 407) {
                     Integer pauseBeforeNextAttempt = state.pauseBeforeNextAttempt();
-                    System.out.println("Pause: " + pauseBeforeNextAttempt);
+                    log().debug("Pause: " + pauseBeforeNextAttempt);
                     Scheduler.scheduleOnce((ActorRef) this.self(), conf, pauseBeforeNextAttempt, TimeUnit.MILLISECONDS);
                 } else if (error.getCode() == 409) {
                     Integer pauseBeforeNextAttempt = state.pauseBeforeNextAttempt();
-                    System.out.println("Pause: " + pauseBeforeNextAttempt);
+                    log().debug("Pause: " + pauseBeforeNextAttempt);
                     state.nickConflict();
                     Scheduler.scheduleOnce((ActorRef) this.self(), conf, pauseBeforeNextAttempt, TimeUnit.MILLISECONDS);
                 }
             }
         }
-        if (success) {
-            state.success();
-            System.out.println(muc);
-            muc.addMessageListener(new MUCMessageListener(this, muc));
-        }
     }
 
     public void onLoggedIn() {
         joinConferences(account);
-        System.out.println(this + ":after logon: " + account.toString());
+        log().debug(this + ":after logon: " + account.toString());
     }
 
     @Override
@@ -110,7 +113,7 @@ public class XMPPWorker extends UntypedActor {
             connection = null;
         }*/
         if (message instanceof AccountData) {
-            System.out.println(this + ":worker message: " + message.toString());
+            log().debug(this + ":worker message: " + message.toString());
             account = (AccountData) message;
             logon();
             onLoggedIn();
@@ -120,7 +123,7 @@ public class XMPPWorker extends UntypedActor {
         } else if (message instanceof ConferenceData) {
             if ((null != connection) && connection.isConnected()) {
                 ConferenceData conf = (ConferenceData) message;
-                System.out.println(this + ":worker rejoin: " + message.toString());
+                log().debug(this + ":worker rejoin: " + message.toString());
                 joinConf(conf);
             }
         } else
@@ -129,6 +132,21 @@ public class XMPPWorker extends UntypedActor {
 
     @Override
     public void postStop() {
-        System.out.println(this + ":worker ended");
+        log().debug(this + ":worker ended");
+    }
+
+    public String toString() {
+        String connected = "offline";
+        String user = null;
+        if (null != connection)
+        {
+            if (connection().isConnected())
+            {
+                connected = connection().getConnectionID();
+            }
+            user = connection.getUser();
+
+        }
+        return String.format("XMPP%s:%s:%s", Integer.toHexString(1), user, connected);
     }
 }

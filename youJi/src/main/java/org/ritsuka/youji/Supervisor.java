@@ -2,6 +2,8 @@ package org.ritsuka.youji;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -13,6 +15,11 @@ import static akka.actor.Actors.actorOf;
  * Time: 8:48 PM
  */
 public class Supervisor extends UntypedActor {
+    private Logger log()
+    {
+        return LoggerFactory.getLogger(Supervisor.class);
+    }
+
     //private ActorRef router;
     private final CountDownLatch latch;
 
@@ -52,7 +59,7 @@ public class Supervisor extends UntypedActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
-        System.out.println(toString() + ":message: " + message.toString());
+        log().debug(toString() + ":message: " + message.toString());
         if (message instanceof AccountData) {
             ActorRef worker = actorOf(XMPPWorker.class).start();
             workers.add(worker);
@@ -63,7 +70,7 @@ public class Supervisor extends UntypedActor {
 
     @Override
     public void postStop() {
-        System.out.println("supervisor ended");
+        log().debug("supervisor ended");
         latch.countDown();
     }
 }

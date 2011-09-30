@@ -7,6 +7,7 @@ import org.jivesoftware.smackx.muc.MultiUserChat;
  * Time: 11:35 PM
  */
 public class ConferenceState {
+
     private ConferenceData confdata = null;
     private Integer attemptsCount = 0;
     private MultiUserChat muc = null;
