@@ -14,12 +14,6 @@ import java.util.concurrent.CountDownLatch;
 
 import static akka.actor.Actors.actorOf;
 
-// TODO: shared JIDs list
-// TODO: shared config
-// TODO: reply actors+some kind of plugins
-// TODO: history in mongodb
-// TODO: blogging
-
 /**
  * Date: 9/29/11
  * Time: 8:48 PM

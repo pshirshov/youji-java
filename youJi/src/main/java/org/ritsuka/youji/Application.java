@@ -1,5 +1,11 @@
 package org.ritsuka.youji;
 
+// TODO: shared JIDs list
+// TODO: shared config
+// TODO: reply actors+some kind of plugins
+// TODO: history in mongodb
+// TODO: blogging
+
 import akka.actor.ActorRef;
 import akka.actor.Actors;
 import akka.actor.UntypedActor;
