@@ -8,13 +8,12 @@ package org.ritsuka.youji;
 
 import akka.actor.ActorRef;
 import akka.actor.Actors;
-import akka.actor.UntypedActor;
-import akka.actor.UntypedActorFactory;
 import org.ritsuka.youji.util.Log;
-import org.ritsuka.youji.util.YaConfig;
-import org.slf4j.Logger;
+import org.ritsuka.youji.util.yaconfig.YaConfig;
 import org.slf4j.LoggerFactory;
+import sun.security.krb5.*;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import static akka.actor.Actors.actorOf;
@@ -24,8 +23,6 @@ public class Application {
         return new Log(LoggerFactory.getLogger("APP"));
     }
     public static void main(final String[] args1) throws InterruptedException {
-        //System.setProperty("logback.configurationFile", "conf/lb.xml");
-        //String configName = System.getProperty("config");
         YaConfig.loadConfig();
 
         final CountDownLatch latch = new CountDownLatch(1);
@@ -34,8 +31,14 @@ public class Application {
 
         ActorRef master = actorOf(Supervisor.create(latch)).start();
 
-        master.tell(new AccountData("youji_sagan"));
-        master.tell(new AccountData("youji_sagan1"));
+        List initialAccounts = YaConfig.get(Config.INITIAL_ACCOUNTS);
+        for (Object obj:initialAccounts)
+        {
+            assert obj instanceof String;
+            String account = obj.toString();
+            master.tell(new AccountData(account));
+        }
+
         latch.await();
         log().info("Exiting...");
         Actors.registry().shutdownAll();

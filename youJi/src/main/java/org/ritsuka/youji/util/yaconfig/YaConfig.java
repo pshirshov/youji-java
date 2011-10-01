@@ -1,12 +1,10 @@
-package org.ritsuka.youji.util;
+package org.ritsuka.youji.util.yaconfig;
 
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,7 +15,6 @@ public final class YaConfig {
     private static final Boolean verbose = true;
     private static Map parsed = null;
 
-    //TODO: think about proper config initialization....
     static public boolean loadConfig() {
         String configPath = System.getProperty(CFG_DEFAULT_PROPERTY);
 

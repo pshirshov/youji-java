@@ -1,5 +1,6 @@
 package org.ritsuka.youji;
 
+import org.jivesoftware.smack.util.StringUtils;
 import org.ritsuka.youji.muc.ConferenceData;
 
 import java.util.ArrayList;
@@ -10,10 +11,19 @@ import java.util.List;
  * Time: 8:30 PM
  */
 public class AccountData {
-    private String login = null;
+    private final String login;
+    private final String server;
+    private String resource;
+    private String password;
 
-    AccountData(String a_login) {
-        login = a_login;
+    AccountData(String a_fqjid) {
+        this.server = StringUtils.parseServer(a_fqjid);
+        this.resource = StringUtils.parseResource(a_fqjid);
+        String loginpass = StringUtils.parseName(a_fqjid);
+        assert loginpass.contains(":");
+        int delimpos = loginpass.indexOf(":");
+        this.login = loginpass.substring(0, delimpos);
+        this.password = loginpass.substring(delimpos+1);
     }
 
     public String login() {
@@ -21,20 +31,16 @@ public class AccountData {
     }
 
     public String password() {
-        return "BNasdfhk87623#";
+        return password;
     }
 
     public String server() {
-        return "draugr.de";
+        return server;
     }
 
     public String resource() {
-        return "hooita";
+        return resource;
     }
-
-    /*public String alternativeResource(String rejected) {
-        return rejected + "_";
-    }*/
 
     public List<ConferenceData> conferences() {
         ArrayList<ConferenceData> conferenceDatas = new ArrayList<ConferenceData>();
@@ -43,7 +49,7 @@ public class AccountData {
     }
 
     public String toString() {
-        return login() + "@" + server() + "/" + Integer.toHexString(hashCode());
+        return login() + "@" + server() + "/" + resource() + "=" + Integer.toHexString(hashCode());
     }
 
 }

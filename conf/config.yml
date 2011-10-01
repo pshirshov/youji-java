@@ -1,6 +1,14 @@
 ---
+youji:
+    reconnection:
+        interval: 4000
+        maxinterval: 10000
+    initial-accounts:
+        - "youji_sagan:BNasdfhk87623#@draugr.de/hooita"
+        - "youji_sagan1:BNasdfhk87623#@draugr.de/hooita"
+
 jvm.properties:
-  logback.configurationFile : conf/lb.xml
-  # tree-like structures are also allowed 
-  smack:
+    logback.configurationFile : conf/lb.xml
+    # tree-like structures are also allowed
+    smack:
         debugEnabled: true
