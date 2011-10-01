@@ -1,0 +1,6 @@
+---
+jvm.properties:
+  logback.configurationFile : conf/lb.xml
+  # tree-like structures are also allowed 
+  smack:
+        debugEnabled: true

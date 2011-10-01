@@ -40,7 +40,7 @@ public class MUCMessageListenerAk {
         String body = message.getBody();
         log().debug("{} in {}: {}", nick, jid, body);
 
-        /*try {
+/*        try {
             if (body.length() < 10)
             {
                 String answer = String.format("Ходят тут всякие илитарии навроде %s: блядь, пишут хуиту навроде '%s'",

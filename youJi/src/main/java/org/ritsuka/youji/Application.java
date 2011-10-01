@@ -11,6 +11,7 @@ import akka.actor.Actors;
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 import org.ritsuka.youji.util.Log;
+import org.ritsuka.youji.util.YaConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,10 @@ public class Application {
         return new Log(LoggerFactory.getLogger("APP"));
     }
     public static void main(final String[] args1) throws InterruptedException {
+        //System.setProperty("logback.configurationFile", "conf/lb.xml");
+        //String configName = System.getProperty("config");
+        YaConfig.loadConfig();
+
         final CountDownLatch latch = new CountDownLatch(1);
         ShutdownHook shutdownHook = new ShutdownHook(latch);
         Runtime.getRuntime().addShutdownHook(shutdownHook);

@@ -26,7 +26,13 @@ public class MessageListenerThreaded implements MessageListener{
     @Override
     public void processMessage(Chat chat, Message message) {
         Log log = log(chat.getParticipant());
-        log.debug("PM: {}", message.getBody());
+        String body = message.getBody();
+        if (Message.Type.error == message.getType())
+        {
+            log.warn("Ignored Err PM: E:{} MSG:{} ({})", message.getError().getMessage(), body, message.toXML());
+            return;
+        }
+        log.debug("PM: {}", message.toXML());
         Message newMessage = new Message();
         newMessage.setBody("Wtf?");
         //message.setProperty("favoriteColor", "red");
