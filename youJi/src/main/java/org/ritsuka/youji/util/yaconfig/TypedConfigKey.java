@@ -1,7 +1,5 @@
 package org.ritsuka.youji.util.yaconfig;
 
-import org.ritsuka.youji.util.reflection.TypeReference;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

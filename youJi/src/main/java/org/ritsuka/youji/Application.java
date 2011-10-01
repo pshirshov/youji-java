@@ -11,7 +11,6 @@ import akka.actor.Actors;
 import org.ritsuka.youji.util.Log;
 import org.ritsuka.youji.util.yaconfig.YaConfig;
 import org.slf4j.LoggerFactory;
-import sun.security.krb5.*;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -31,10 +30,9 @@ public class Application {
 
         ActorRef master = actorOf(Supervisor.create(latch)).start();
 
-        List initialAccounts = YaConfig.get(Config.INITIAL_ACCOUNTS);
-        for (Object obj:initialAccounts)
+        List<String> initialAccounts = YaConfig.get(Config.INITIAL_ACCOUNTS);
+        for (String account:initialAccounts)
         {
-            String account = obj.toString();
             master.tell(new AccountData(account));
         }
 
