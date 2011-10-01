@@ -34,7 +34,6 @@ public class Application {
         List initialAccounts = YaConfig.get(Config.INITIAL_ACCOUNTS);
         for (Object obj:initialAccounts)
         {
-            assert obj instanceof String;
             String account = obj.toString();
             master.tell(new AccountData(account));
         }

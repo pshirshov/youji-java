@@ -1,5 +1,6 @@
 package org.ritsuka.youji.util.yaconfig;
 
+import org.apache.commons.lang.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -80,6 +81,16 @@ public final class YaConfig {
         }
 
         try {
+            Verifier verifier = key.verifier();
+            if (null != key.verifier())
+            {
+                if (!verifier.verify((T) val))
+                {
+                  String path = StringUtils.join(key.getPath().toArray());
+                  throw new RuntimeException(String.format("Parameter '%s' has invalid value", path));
+                }
+            }
+
             return (T) val;
         } catch (final ClassCastException e) {
             return null;
