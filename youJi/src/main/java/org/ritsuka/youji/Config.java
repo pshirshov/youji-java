@@ -1,7 +1,7 @@
 package org.ritsuka.youji;
 
 import org.ritsuka.youji.util.yaconfig.TypedConfigKey;
-import org.ritsuka.youji.util.yaconfig.Verifier;
+import org.ritsuka.youji.util.yaconfig.IVerifier;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
  * Time: 3:46 PM
  */
 public final class Config<T> extends TypedConfigKey<T> {
-    public static final Config<List> INITIAL_ACCOUNTS = new Config<List>(
+    public static final Config<List<String>> INITIAL_ACCOUNTS = new Config<List<String>>(
             null, "youji.initial-accounts",
-            new Verifier<List>() {
+            new IVerifier<List<String>>() {
                 @Override
                 public boolean verify(List value) {
                     for (Object obj:value)
@@ -29,7 +29,7 @@ public final class Config<T> extends TypedConfigKey<T> {
         super(defaultValue, path);
     }
 
-    private Config(final T defaultValue, final String path, Verifier<T> verifier) {
+    private Config(final T defaultValue, final String path, IVerifier<T> verifier) {
         super(defaultValue, path, verifier);
     }
 }

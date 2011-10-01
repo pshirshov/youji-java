@@ -1,5 +1,7 @@
 package org.ritsuka.youji.util.yaconfig;
 
+import org.ritsuka.youji.util.reflection.TypeReference;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,21 +22,20 @@ import java.util.List;
 public class TypedConfigKey<T> implements ITypedConfigKey<T> {
     final List<String> keys = new ArrayList<String>();
     final T defValue;
-    final Verifier verifier;
+    final IVerifier<T> verifier;
 
     public TypedConfigKey(final T defaultValue, final String path) {
-        verifier = null;
-        this.defValue = defaultValue;
-        initPath(defaultValue, path);
+        this(defaultValue, path, new IVerifier.True<T>());
     }
 
-    public TypedConfigKey(final T defaultValue, final String path, final Verifier verifier) {
+    public TypedConfigKey(final T defaultValue, final String path,
+                          final IVerifier<T> verifier) {
         this.verifier = verifier;
         this.defValue = defaultValue;
         initPath(defaultValue, path);
     }
 
-    public Verifier verifier()
+    public IVerifier<T> verifier()
     {
         return verifier;
     }

@@ -28,14 +28,19 @@ public final class YaConfig {
             InputStream input = new FileInputStream(new File(configPath));
 
             parsed = (Map) yaml.load(input);
-            if (parsed.containsKey(CFG_JVMPROPS_SECTION))
+            if (parsed.containsKey(CFG_JVMPROPS_SECTION)) {
                 setProperties((Map) parsed.get(CFG_JVMPROPS_SECTION), "");
-            else if (verbose)
+            } else if (verbose) {
                 System.out.println("Config doesn't contain JVM properties");
+            }
 
             return true;
         } catch (final Exception e) {
-            System.err.println(String.format("YaConfig: Can't load config file. Use -D%s=relative/path/to/cfg.yml. Exception: %s", CFG_DEFAULT_PROPERTY, e.toString()));
+            System.err.println(String.format(
+                    "YaConfig: Can't load config file. "
+                    + "Use -D%s=relative/path/to/cfg.yml. Exception: %s",
+                    CFG_DEFAULT_PROPERTY,
+                    e.toString()));
             e.printStackTrace();
             //throw new ExceptionInInitializerError(e);
         }
@@ -43,26 +48,28 @@ public final class YaConfig {
     }
 
     // set jvm properties using tree structure
+    @SuppressWarnings("unchecked")
     static private void setProperties(Map props, String basepath) {
         if (null != props) {
             Set<Map.Entry> entries = props.entrySet();
-            for (Map.Entry entry:entries) {
+            for (Map.Entry entry : entries) {
                 Object value = entry.getValue();
                 String key = entry.getKey().toString();
-                if (!basepath.isEmpty())
+                if (!basepath.isEmpty()) {
                     key = basepath + "." + key;
+                }
 
                 if (!(value instanceof Map)) {
                     System.setProperty(key, value.toString());
-                    if (verbose)
+                    if (verbose) {
                         System.out.println(String.format("YaConfig: %s:=%s", key, value));
+                    }
+                } else {
+                    setProperties((Map) value, key);
                 }
-                else
-                    setProperties((Map)value, key);
             }
         }
     }
-
 
     @SuppressWarnings("unchecked")
     public static <T> T get(ITypedConfigKey<T> key) {
@@ -80,20 +87,18 @@ public final class YaConfig {
             return key.getDefaultValue();
         }
 
+        T assumedVal;
         try {
-            Verifier verifier = key.verifier();
-            if (null != key.verifier())
-            {
-                if (!verifier.verify((T) val))
-                {
-                  String path = StringUtils.join(key.getPath().toArray());
-                  throw new RuntimeException(String.format("Parameter '%s' has invalid value", path));
-                }
+            assumedVal = (T) val;
+            IVerifier<T> verifier = key.verifier();
+            if (!verifier.verify(assumedVal)) {
+                String path = StringUtils.join(key.getPath().toArray());
+                throw new RuntimeException(String.format("Parameter '%s' has invalid value", path));
             }
-
-            return (T) val;
         } catch (final ClassCastException e) {
-            return null;
+            throw new RuntimeException(e);
         }
+
+        return assumedVal;
     }
 }

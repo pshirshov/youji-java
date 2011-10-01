@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ITypedConfigKey<T> {
     T getDefaultValue();
-    Verifier verifier();
+    IVerifier<T> verifier();
 
     List<String> getPath();
 }
