@@ -6,10 +6,9 @@ youji:
     initial-accounts:
         - "youji_sagan:BNasdfhk87623#@draugr.de/hooita"
         - "youji_sagan1:BNasdfhk87623#@draugr.de/hooita"
-        - 123
 
 jvm.properties:
-    logback.configurationFile : conf/lb.xml
+    logback.configurationFile : conf/logback.xml
     # tree-like structures are also allowed
     smack:
         debugEnabled: true

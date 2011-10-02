@@ -23,7 +23,7 @@ public interface IVerifier<T> {
         @Override
         public boolean verify(List value) {
             for (Object obj: value) {
-                if (obj !=null && obj.getClass() == getTypeClass())
+                if (obj !=null && obj.getClass() != getTypeClass())
                     return false;
             }
             return true;
