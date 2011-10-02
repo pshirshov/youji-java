@@ -322,7 +322,7 @@ public final class IntrospectionUtils {
         return new NoSuchMethodException(message
                 + " "
                 + type.getCanonicalName()
-                + '[' + StringUtils.join(signature) + ']');
+                + '[' + StringUtils.join(signature, ',') + ']');
     }
 
     /**
