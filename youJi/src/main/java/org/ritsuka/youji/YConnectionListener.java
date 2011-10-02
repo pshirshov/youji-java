@@ -1,40 +1,52 @@
 package org.ritsuka.youji;
 
+import akka.actor.ActorRef;
 import org.jivesoftware.smack.ConnectionListener;
+import org.ritsuka.youji.event.ReconnectedEvent;
+import org.ritsuka.youji.util.Log;
+import org.slf4j.LoggerFactory;
 
 /**
  * Date: 9/30/11
  * Time: 12:05 AM
  */
 public class YConnectionListener implements ConnectionListener {
-    XMPPWorker worker;
+    private ActorRef worker;
+    private String logId;
 
-    public YConnectionListener(XMPPWorker a_worker) {
-        worker = a_worker;
+    public YConnectionListener(ActorRef worker, String logId) {
+        this.worker = worker;
+        this.logId = logId;
+    }
+
+    private Log log() {
+        return new Log(LoggerFactory.getLogger(toString()));
+    }
+
+    public String toString() {
+        return "CL." + logId;
     }
 
     @Override
     public void connectionClosed() {
-        System.out.println("connectionClosed");
     }
 
     @Override
     public void connectionClosedOnError(Exception e) {
-        System.out.println("connectionClosedOnError");
     }
 
     @Override
     public void reconnectingIn(int seconds) {
-        System.out.println("reconnectingIn: " + seconds);
+        log().info("Reconnecting in {}", seconds);
     }
 
     @Override
     public void reconnectionSuccessful() {
-        worker.onLoggedIn();
+        worker.tell(new ReconnectedEvent());
     }
 
     @Override
     public void reconnectionFailed(Exception e) {
-        System.out.println("reconnectionFailed");
+        log().error("Reconnection failed: {}", e);
     }
 }

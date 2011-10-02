@@ -9,6 +9,7 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.youji.event.ReconnectedEvent;
 import org.ritsuka.youji.event.RunXmppWorkerEvent;
 import org.ritsuka.youji.muc.*;
 import org.ritsuka.youji.muc.event.ForcedMUCLeaveEvent;
@@ -51,7 +52,7 @@ public class XMPPWorker extends UntypedActor {
         this.account = accountData;
     }
 
-    public void init() {
+    private void init() {
         log().debug("Worker initiated: {}", account);
         try {
             logon();
@@ -67,7 +68,7 @@ public class XMPPWorker extends UntypedActor {
             connection = new XMPPConnection(account.server());
             connection.connect();
             connection.login(account.login(), account.password(), account.resource());
-            connection.addConnectionListener(new YConnectionListener(this));
+            connection.addConnectionListener(new YConnectionListener(selfRef(), objId()));
             ChatManager chatmanager = connection.getChatManager();
             chatmanager.addChatListener(new ChatListenerThreaded(selfRef()));
         }
@@ -119,7 +120,7 @@ public class XMPPWorker extends UntypedActor {
     }
 
 
-    public void onLoggedIn() {
+    private void onLoggedIn() {
         joinConferences(account);
     }
 
@@ -133,6 +134,10 @@ public class XMPPWorker extends UntypedActor {
             MUCMessageListenerAk listenerAk = (MUCMessageListenerAk)message;
             listenerAk.setWorker(this);
             listenerAk.processPacketInActor();
+        }
+        else if (message instanceof ReconnectedEvent)
+        {
+            onLoggedIn();
         }
         else if (message instanceof ForcedMUCLeaveEvent)
         {
@@ -161,18 +166,21 @@ public class XMPPWorker extends UntypedActor {
         connection.disconnect();
     }
 
+    public String objId() {
+        return Integer.toHexString(((Object)this).hashCode());
+    }
     public String toString() {
-        String connected = "offline";
+        String connectionId = "offline";
         String user = null;
         if (null != connection)
         {
             if (connection.isConnected())
             {
-                connected = connection.getConnectionID();
+                connectionId = connection.getConnectionID();
             }
             user = connection.getUser();
 
         }
-        return String.format("XMPP%s:%s:%s", Integer.toHexString(((Object)this).hashCode()), user, connected);
+        return String.format("XW.%s.%s.%s", objId(), connectionId, user);
     }
 }

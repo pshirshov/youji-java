@@ -15,6 +15,13 @@ public final class Config<T> extends TypedConfigKey<T> {
             null, "youji.initial-accounts",
             new IVerifier.ListVerifier<String>(){});
 
+    public static final Config<Integer> MUC_REJOIN_INTERVAL = new Config<Integer>(
+            null, "youji.muc.rejoin.interval");
+
+
+    public static final Config<Integer> MUC_REJOIN_MAXINTERVAL = new Config<Integer>(
+            null, "youji.muc.rejoin.maxinterval");
+
     private Config(final T defaultValue, final String path) {
         super(defaultValue, path);
     }

@@ -20,8 +20,7 @@ import static akka.actor.Actors.actorOf;
  */
 public class Supervisor extends UntypedActor {
     final Log log = new Log(LoggerFactory.getLogger("SV"));
-    private Log log()
-    {
+    private Log log() {
         return this.log;
     }
 

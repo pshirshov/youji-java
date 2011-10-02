@@ -1,6 +1,8 @@
 package org.ritsuka.youji.muc;
 
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.youji.Config;
+import org.ritsuka.youji.util.yaconfig.YaConfig;
 
 /**
  * Date: 9/29/11
@@ -28,9 +30,10 @@ public class ConferenceState {
     }
 
     public Integer pauseBeforeNextAttempt() {
-        Integer pause = attempts() * 4000;
-        if (pause > 10000)
-            pause = 10000;
+        Integer pause = attempts() * YaConfig.get(Config.MUC_REJOIN_INTERVAL);
+        Integer maxInterval = YaConfig.get(Config.MUC_REJOIN_MAXINTERVAL);
+        if (pause > maxInterval)
+            pause = maxInterval;
         return pause;
     }
 

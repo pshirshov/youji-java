@@ -21,8 +21,9 @@ public class MUCMessageListenerAk {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(worker.connection().getUser());
-        sb.append(":");
+        sb.append("MM.");
+        sb.append(worker.objId());
+        sb.append(".");
         sb.append(chat.getRoom());
         sb.append("/");
         sb.append(chat.getNickname());
