@@ -22,10 +22,14 @@ import java.util.concurrent.CountDownLatch;
 
 import static akka.actor.Actors.actorOf;
 
-public class Application {
-    static private Log log() {
+public final class Application {
+    private Application() {
+    }
+
+    private static Log log() {
         return new Log(LoggerFactory.getLogger("APP"));
     }
+
     public static void main(final String[] args1) throws InterruptedException {
         YaConfig.verbose = true;
         Constructor constructor = new Constructor();

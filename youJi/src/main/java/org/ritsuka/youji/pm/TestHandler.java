@@ -11,13 +11,15 @@ import org.slf4j.LoggerFactory;
  * Date: 10/2/11
  * Time: 5:37 PM
  */
-public class TestHandler implements IPmHandler {
-    private Log log(String id) {
+public final class TestHandler implements IPmHandler {
+    private Log log(final String id) {
         return new Log(LoggerFactory.getLogger(id));
     }
 
     @Override
-    public void handlePm(ActorRef worker, Chat chat, Message message) {
+    public void handlePm(final ActorRef worker,
+                         final Chat chat,
+                         final Message message) {
         Log log = log(chat.getParticipant());
         log.debug("PM: {}", message.toXML());
         Message newMessage = new Message();

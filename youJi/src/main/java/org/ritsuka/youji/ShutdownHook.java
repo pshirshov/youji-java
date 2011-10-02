@@ -10,17 +10,18 @@ import java.util.concurrent.CountDownLatch;
  * Date: 9/10/11
  * Time: 5:58 PM
  */
-public class ShutdownHook extends Thread {
+public final class ShutdownHook extends Thread {
     private  CountDownLatch latch;
 
-    public ShutdownHook(CountDownLatch latch) {
+    public ShutdownHook(final CountDownLatch latch) {
         this.latch = latch;
     }
 
     private Log log() {
         return new Log(LoggerFactory.getLogger("APP"));
     }
-    public final void run() {
+
+    public void run() {
         log().info("Shutting down...");
 
         Supervisor.instance().tell(new AppShutdownEvent());

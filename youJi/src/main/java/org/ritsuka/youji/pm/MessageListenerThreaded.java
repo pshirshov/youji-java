@@ -16,24 +16,23 @@ import static akka.actor.Actors.actorOf;
  * Date: 9/30/11
  * Time: 9:32 PM
  */
-public class MessageListenerThreaded implements MessageListener{
-    private ActorRef worker;
-    private List<IPmHandler> handlers;
+public final class MessageListenerThreaded implements MessageListener{
+    private final ActorRef worker;
+    private final List<IPmHandler> handlers = new ArrayList<IPmHandler>();
 
-    public MessageListenerThreaded(ActorRef worker) {
+    public MessageListenerThreaded(final ActorRef worker) {
         this.worker = worker;
 
         // TODO: add appropriate plugins
-        handlers = new ArrayList<IPmHandler>();
         handlers.add(new TestHandler());
     }
 
-    private Log log(String id) {
+    private Log log(final String id) {
         return new Log(LoggerFactory.getLogger(id));
     }
 
     @Override
-    public void processMessage(Chat chat, Message message) {
+    public void processMessage(final Chat chat, final Message message) {
         Log log = log(chat.getParticipant());
         String body = message.getBody();
         if (Message.Type.error == message.getType())

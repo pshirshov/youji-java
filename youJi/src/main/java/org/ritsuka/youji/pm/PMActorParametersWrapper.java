@@ -8,12 +8,14 @@ import org.jivesoftware.smack.packet.Message;
  * Date: 10/2/11
  * Time: 5:44 PM
  */
-public class PMActorParametersWrapper {
+public final class PMActorParametersWrapper {
     private final ActorRef actor;
     private final Chat chat;
     private final Message message;
 
-    public PMActorParametersWrapper(ActorRef actor, Chat chat, Message message) {
+    public PMActorParametersWrapper(final ActorRef actor,
+                                    final Chat chat,
+                                    final Message message) {
         this.actor = actor;
         this.chat = chat;
         this.message = message;

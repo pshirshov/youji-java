@@ -5,13 +5,14 @@ package org.ritsuka.youji.util.yaconfig;
  * @since 10/2/11 5:36 PM
  */
 public interface IConstructor<T> {
+    T construct(Object val);
+
     class Bypass<T> implements IConstructor<T> {
         @SuppressWarnings("unchecked")
         @Override
-        public T construct(Object val) {
+        public T construct(final Object val) {
             return (T) val;
         }
     }
 
-    T construct(Object val);
 }

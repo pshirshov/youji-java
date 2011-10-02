@@ -16,12 +16,12 @@ import java.util.List;
 *            "conf/hibernate/hibernate.cfg.xml",
 *            "hibernate", "test", "config.value");
 *  path ("hibernate", "test", "config.value") is equal to "hibernate.test.config.value"
-* */
-public class ConfigKey<T> implements IConfigKey<T> {
-    final List<String> keys = new ArrayList<String>();
-    final T defValue;
-    final IKeyVerifier<T> verifier;
-    final IConstructor<T> constructor;
+*/
+public final class ConfigKey<T> implements IConfigKey<T> {
+    private final List<String> keys = new ArrayList<String>();
+    private final T defValue;
+    private final IKeyVerifier<T> verifier;
+    private final IConstructor<T> constructor;
 
     public ConfigKey(final String path) {
         this(path, new IKeyVerifier.True<T>());
@@ -52,7 +52,7 @@ public class ConfigKey<T> implements IConfigKey<T> {
         this.verifier = verifier;
         this.defValue = defaultValue;
         this.constructor = constructor;
-        initPath(defaultValue, path);
+        initPath(path);
     }
 
     public IKeyVerifier<T> verifier(){
@@ -64,7 +64,7 @@ public class ConfigKey<T> implements IConfigKey<T> {
         return constructor;
     }
 
-    private void initPath(T defaultValue, String path) {
+    private void initPath(final String path) {
         if (path.contains("."))
             Collections.addAll(keys, path.split("\\."));
         else

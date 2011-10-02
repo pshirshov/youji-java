@@ -13,17 +13,17 @@ import java.util.concurrent.TimeUnit;
  * Date: 9/30/11
  * Time: 9:58 PM
  */
-public class MUCJoinErrorProcessor {
-    private Log log;
-    private ActorRef actor;
+public final class MUCJoinErrorProcessor {
+    private final Log log;
+    private final ActorRef actor;
 
-    public MUCJoinErrorProcessor(Log log, ActorRef actor) {
-
+    public MUCJoinErrorProcessor(final Log log, final ActorRef actor) {
         this.log = log;
         this.actor = actor;
     }
 
-    public void processMucError(ConferenceState state, XMPPError error) {
+    public void processMucError(final ConferenceState state,
+                                final XMPPError error) {
         ConferenceData conf = state.conferenceData();
 
         Integer code = error.getCode();

@@ -1,13 +1,10 @@
 package org.ritsuka.youji.muc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Date: 9/29/11
  * Time: 9:15 PM
  */
-public class ConferenceData {
+public final class ConferenceData {
     private String nick = null;
 
     public ConferenceData() {
@@ -26,7 +23,7 @@ public class ConferenceData {
         return nick;
     }
 
-    public String goodNick(String rejected) {
+    public String goodNick(final String rejected) {
         return rejected + "_";
     }
 }

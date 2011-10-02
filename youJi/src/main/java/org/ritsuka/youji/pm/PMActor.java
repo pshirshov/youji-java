@@ -7,10 +7,10 @@ import akka.actor.UntypedActorFactory;
  * Date: 10/2/11
  * Time: 5:41 PM
  */
-public class PMActor extends UntypedActor {
+public final class PMActor extends UntypedActor {
     private final IPmHandler handler;
 
-    static public UntypedActorFactory create(final IPmHandler handler) {
+    public static UntypedActorFactory create(final IPmHandler handler) {
         return new UntypedActorFactory() {
             public UntypedActor create() {
                 return new PMActor(handler);
@@ -18,12 +18,12 @@ public class PMActor extends UntypedActor {
         };
     }
 
-    private PMActor(IPmHandler handler) {
+    private PMActor(final IPmHandler handler) {
         this.handler = handler;
     }
 
     @Override
-    public void onReceive(Object message) throws Exception {
+    public void onReceive(final Object message) {
         if (message instanceof PMActorParametersWrapper){
             PMActorParametersWrapper pm = (PMActorParametersWrapper) message;
              handler.handlePm(pm.getActor(), pm.getChat(), pm.getMessage());

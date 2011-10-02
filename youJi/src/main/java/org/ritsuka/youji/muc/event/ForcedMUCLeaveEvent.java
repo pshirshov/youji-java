@@ -7,11 +7,11 @@ import org.jivesoftware.smackx.muc.MultiUserChat;
  * Time: 9:51 PM
  */
 public interface ForcedMUCLeaveEvent {
-    public MultiUserChat getChat();
+    MultiUserChat getChat();
 
-    public String getReason();
+    String getReason();
 
-    public String getKicker();
+    String getKicker();
 
-    public String action();
+    String action();
 }

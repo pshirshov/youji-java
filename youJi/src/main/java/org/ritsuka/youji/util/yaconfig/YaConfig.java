@@ -24,13 +24,13 @@ public final class YaConfig {
         return load(null);
     }
 
-    public static boolean load(BaseConstructor constructor) {
+    public static boolean load(final BaseConstructor constructor) {
         config = new YaConfig();
         return config.loadConfig(constructor);
     }
 
 
-    public boolean loadConfig(BaseConstructor constructor) {
+    public boolean loadConfig(final BaseConstructor constructor) {
         String configPath = System.getProperty(CFG_DEFAULT_PROPERTY);
 
         if (configPath == null) {
@@ -67,7 +67,7 @@ public final class YaConfig {
 
     // set jvm properties using tree structure
     @SuppressWarnings("unchecked")
-    private void setProperties(Map props, String basepath) {
+    private void setProperties(final Map props, final String basepath) {
         if (null != props) {
             Set<Map.Entry> entries = props.entrySet();
             for (Map.Entry entry : entries) {
@@ -90,7 +90,7 @@ public final class YaConfig {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T get(IConfigKey<T> key) {
+    public static <T> T get(final IConfigKey<T> key) {
         Object val = config.getParsed();
         for (String entry : key.getPath()) {
             if (val instanceof Map) {
@@ -113,10 +113,10 @@ public final class YaConfig {
 
             if (!verifier.verify(assumedVal)) {
                 String path = StringUtils.join(key.getPath().toArray());
-                throw new RuntimeException(String.format("Parameter '%s' has invalid value", path));
+                throw new IllegalArgumentException(String.format("Parameter '%s' has invalid value", path));
             }
         } catch (final ClassCastException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
 
         return assumedVal;

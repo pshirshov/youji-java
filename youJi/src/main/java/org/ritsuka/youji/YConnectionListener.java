@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
  * Date: 9/30/11
  * Time: 12:05 AM
  */
-public class YConnectionListener implements ConnectionListener {
-    private ActorRef worker;
-    private String logId;
+public final class YConnectionListener implements ConnectionListener {
+    private final ActorRef worker;
+    private final String logId;
 
-    public YConnectionListener(ActorRef worker, String logId) {
+    public YConnectionListener(final ActorRef worker, final String logId) {
         this.worker = worker;
         this.logId = logId;
     }
@@ -32,11 +32,11 @@ public class YConnectionListener implements ConnectionListener {
     }
 
     @Override
-    public void connectionClosedOnError(Exception e) {
+    public void connectionClosedOnError(final Exception e) {
     }
 
     @Override
-    public void reconnectingIn(int seconds) {
+    public void reconnectingIn(final int seconds) {
         log().info("Reconnecting in {}", seconds);
     }
 
@@ -46,7 +46,7 @@ public class YConnectionListener implements ConnectionListener {
     }
 
     @Override
-    public void reconnectionFailed(Exception e) {
+    public void reconnectionFailed(final Exception e) {
         log().error("Reconnection failed: {}", e);
     }
 }

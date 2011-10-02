@@ -11,7 +11,8 @@ import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.ritsuka.youji.event.ReconnectedEvent;
 import org.ritsuka.youji.event.RunXmppWorkerEvent;
-import org.ritsuka.youji.muc.*;
+import org.ritsuka.youji.muc.ConferenceData;
+import org.ritsuka.youji.muc.ConferenceState;
 import org.ritsuka.youji.muc.event.ForcedMUCLeaveEvent;
 import org.ritsuka.youji.muc.event.MUCJoinErrorProcessor;
 import org.ritsuka.youji.muc.threaded.MUCMessageListenerThreaded;
@@ -22,33 +23,32 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
-
-import static akka.actor.Actors.actorOf;
+import java.util.Map;
 
 /**
  * Date: 9/29/11
  * Time: 7:51 PM
  */
-public class XMPPWorker extends UntypedActor {
+public final class XMPPWorker extends UntypedActor {
     private Log log() {
         return new Log(LoggerFactory.getLogger(toString()));
     }
 
     private Connection connection = null;
-    AccountData account;
-    HashMap<String, ConferenceState> conferences = new HashMap<String, ConferenceState>();
+    private final AccountData account;
+    private final Map<String, ConferenceState> conferences = new HashMap<String, ConferenceState>();
 
     public Connection connection() {
         return connection;
     }
-    static public UntypedActorFactory create(final AccountData account) {
+    public static UntypedActorFactory create(final AccountData account) {
         return new UntypedActorFactory() {
             public UntypedActor create() {
                 return new XMPPWorker(account);
             }
         };
     }
-    private XMPPWorker(AccountData accountData){
+    private XMPPWorker(final AccountData accountData){
         this.account = accountData;
     }
 
@@ -74,7 +74,7 @@ public class XMPPWorker extends UntypedActor {
         }
     }
 
-    private void joinConferences(AccountData account) {
+    private void joinConferences(final AccountData account) {
         log().debug("Joining conferences...");
         List<ConferenceData> conferences = account.conferences();
         for (ConferenceData conf : conferences) {
@@ -82,7 +82,7 @@ public class XMPPWorker extends UntypedActor {
         }
     }
 
-    private void joinConf(ConferenceData conf) {
+    private void joinConf(final ConferenceData conf) {
         log().debug("Joining to conference: {}", conf);
         if (!connection.isConnected())
             log().error("Connection inactive: {}", conf);
@@ -125,7 +125,7 @@ public class XMPPWorker extends UntypedActor {
     }
 
     @Override
-    public void onReceive(Object message) throws Exception {
+    public void onReceive(final Object message) {
         if (message instanceof RunXmppWorkerEvent){
              init();
         }
@@ -167,7 +167,7 @@ public class XMPPWorker extends UntypedActor {
     }
 
     public String objId() {
-        return Integer.toHexString(((Object)this).hashCode());
+        return Integer.toHexString(this.hashCode());
     }
     public String toString() {
         String connectionId = "offline";

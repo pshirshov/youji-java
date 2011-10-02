@@ -17,7 +17,7 @@ public abstract class ReflectConstructor<T>
         implements IConstructor<T> {
 
     @Override
-    public T construct(Object val) {
+    public final T construct(final Object val) {
         if (!(val instanceof Map)) {
             throw abort("mapping expected");
         }
@@ -25,7 +25,7 @@ public abstract class ReflectConstructor<T>
         try {
             return (T) construct((Map) val);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -63,12 +63,12 @@ public abstract class ReflectConstructor<T>
                 params.toArray(new Object[params.size()]));
     }
 
-    private IllegalArgumentException abort(String message) {
+    private IllegalArgumentException abort(final String message) {
         return new IllegalArgumentException(
                 message + " for [" + getTypeClass().getCanonicalName() + ']');
     }
 
-    private Object makeObject(String className, Object... args)
+    private Object makeObject(final String className, final Object... args)
             throws InvocationTargetException, NoSuchMethodException,
                    InstantiationException, IllegalAccessException,
                    ClassNotFoundException {

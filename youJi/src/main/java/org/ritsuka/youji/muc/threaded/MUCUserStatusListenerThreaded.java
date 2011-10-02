@@ -11,17 +11,19 @@ import org.ritsuka.youji.muc.event.MUCKicked;
  * Date: 9/29/11
  * Time: 9:32 PM
  */
-public class MUCUserStatusListenerThreaded implements UserStatusListener {
-    private ActorRef worker;
-    private MultiUserChat chat;
+public final class MUCUserStatusListenerThreaded
+        implements UserStatusListener {
+    private final ActorRef worker;
+    private final MultiUserChat chat;
 
-    public MUCUserStatusListenerThreaded(ActorRef a_worker, MultiUserChat a_chat) {
+    public MUCUserStatusListenerThreaded(final ActorRef a_worker,
+                                         final MultiUserChat a_chat) {
         worker = a_worker;
         chat = a_chat;
     }
 
     @Override
-    public void kicked(String actor, String reason) {
+    public void kicked(final String actor, final String reason) {
         worker.tell(new MUCKicked(chat, reason, actor));
     }
 
@@ -31,7 +33,7 @@ public class MUCUserStatusListenerThreaded implements UserStatusListener {
     }
 
     @Override
-    public void banned(String actor, String reason) {
+    public void banned(final String actor, final String reason) {
         worker.tell(new MUCBanned(chat, reason, actor));
     }
 

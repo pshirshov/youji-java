@@ -10,6 +10,7 @@ import org.ritsuka.youji.util.Log;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import static akka.actor.Actors.actorOf;
@@ -18,29 +19,29 @@ import static akka.actor.Actors.actorOf;
  * Date: 9/29/11
  * Time: 8:48 PM
  */
-public class Supervisor extends UntypedActor {
-    final Log log = new Log(LoggerFactory.getLogger("SV"));
+public final class Supervisor extends UntypedActor {
+    private final Log log = new Log(LoggerFactory.getLogger("SV"));
     private Log log() {
         return this.log;
     }
 
     private final CountDownLatch latch;
 
-    ArrayList<ActorRef> workers = new ArrayList<ActorRef>();
+    private final List<ActorRef> workers = new ArrayList<ActorRef>();
 
-    static public UntypedActorFactory create(final CountDownLatch latch) {
+    public static UntypedActorFactory create(final CountDownLatch latch) {
         return new UntypedActorFactory() {
             public UntypedActor create() {
                 return new Supervisor(latch);
             }
         };
     }
-    private Supervisor(CountDownLatch latch) {
+    private Supervisor(final CountDownLatch latch) {
         this.latch = latch;
     }
 
     @Override
-    public void onReceive(Object message) throws Exception {
+    public void onReceive(final Object message) {
         log().debug("Message: {}", message);
 
         if (message instanceof AccountData) {
@@ -54,9 +55,9 @@ public class Supervisor extends UntypedActor {
                 worker.stop();
             log().debug("Supervisor ready to shutdown");
             ((ActorRef)self()).stop();
+        } else {
+            throw new IllegalArgumentException("Unknown message [" +message + "]");
         }
-        else
-            throw new IllegalArgumentException("Unknown message [" + message + "]");
     }
 
     @Override

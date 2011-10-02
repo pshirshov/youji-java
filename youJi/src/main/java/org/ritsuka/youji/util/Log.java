@@ -6,7 +6,7 @@ import org.slf4j.Logger;
  * Date: 9/30/11
  * Time: 7:44 PM
  */
-public class Log {
+public final class Log {
     private final Logger logger;
 
     public Log(final Logger logger) {

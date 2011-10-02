@@ -10,9 +10,11 @@ import java.util.List;
  * Time: 4:31 PM
  */
 public interface IKeyVerifier<T> {
-    class True<T> implements IKeyVerifier<T> {
+    boolean verify(T value);
+
+    final class True<T> implements IKeyVerifier<T> {
         @Override
-        public boolean verify(T value) {
+        public boolean verify(final T value) {
             return true;
         }
     }
@@ -21,7 +23,7 @@ public interface IKeyVerifier<T> {
             extends TypeReference<V>
             implements IKeyVerifier<List<V>> {
         @Override
-        public boolean verify(List value) {
+        public final boolean verify(final List value) {
             for (Object obj: value) {
                 if (obj !=null && obj.getClass() != getTypeClass())
                     return false;
@@ -29,6 +31,4 @@ public interface IKeyVerifier<T> {
             return true;
         }
     }
-
-    boolean verify(T value);
 }

@@ -1,17 +1,14 @@
 package org.ritsuka.youji.muc;
 
 import akka.actor.ActorRef;
-import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.ritsuka.youji.XMPPWorker;
 import org.ritsuka.youji.util.Log;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestMucHandler implements IMucMsgHandler {
+public final class TestMucHandler implements IMucMsgHandler {
     //private XMPPWorker worker;
     private MultiUserChat chat;
 
@@ -31,7 +28,9 @@ public class TestMucHandler implements IMucMsgHandler {
     }
 
     @Override
-    public void handleMucMsg(ActorRef worker, MultiUserChat chat, Packet packet) {
+    public void handleMucMsg(final ActorRef worker,
+                             final MultiUserChat chat,
+                             final Packet packet) {
         //this.worker = worker;
         this.chat = chat;
         Message message = (Message)packet;

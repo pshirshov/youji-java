@@ -17,7 +17,7 @@ public abstract class TypeReference<T> {
 
     /** Default constructor. */
     protected TypeReference() {
-        Type superClass = getClass().getGenericSuperclass();
+        final Type superClass = getClass().getGenericSuperclass();
         if (superClass instanceof Class) {
             throw new IllegalArgumentException("Missing type parameter.");
         }
