@@ -21,8 +21,7 @@ public final class YaConfig {
     private static YaConfig config;
 
     public static boolean load() {
-        config = new YaConfig();
-        return config.loadConfig(null);
+        return load(null);
     }
 
     public static boolean load(BaseConstructor constructor) {
@@ -38,7 +37,7 @@ public final class YaConfig {
             configPath = CFG_DEFAULT_PATH;
         }
 
-        Yaml yaml = null;
+        final Yaml yaml;
         if (null != constructor)
             yaml = new Yaml(constructor);
         else
@@ -46,7 +45,6 @@ public final class YaConfig {
 
         try {
             InputStream input = new FileInputStream(new File(configPath));
-
             parsed = (Map) yaml.load(input);
             if (parsed.containsKey(CFG_JVMPROPS_SECTION)) {
                 setProperties((Map) parsed.get(CFG_JVMPROPS_SECTION), "");
@@ -109,8 +107,10 @@ public final class YaConfig {
 
         T assumedVal;
         try {
-            assumedVal = (T) val;
             IKeyVerifier<T> verifier = key.verifier();
+            IConstructor<T> constructor = key.constructor();
+            assumedVal = constructor.construct(val);
+
             if (!verifier.verify(assumedVal)) {
                 String path = StringUtils.join(key.getPath().toArray());
                 throw new RuntimeException(String.format("Parameter '%s' has invalid value", path));

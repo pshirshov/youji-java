@@ -21,29 +21,49 @@ public class ConfigKey<T> implements IConfigKey<T> {
     final List<String> keys = new ArrayList<String>();
     final T defValue;
     final IKeyVerifier<T> verifier;
+    final IConstructor<T> constructor;
 
     public ConfigKey(final String path) {
-        this(path, null, new IKeyVerifier.True<T>());
+        this(path, new IKeyVerifier.True<T>());
+    }
+
+    public ConfigKey(final String path, final IConstructor<T> constructor) {
+        this(path, new IKeyVerifier.True<T>(), constructor);
     }
 
     public ConfigKey(final String path, final T defaultValue) {
-        this(path, defaultValue, new IKeyVerifier.True<T>());
+        this(path, defaultValue, new IKeyVerifier.True<T>(), new IConstructor.Bypass<T>());
     }
 
-    public ConfigKey(final String path, final IKeyVerifier<T> verifier) {
-        this(path, null, verifier);
+    public ConfigKey(final String path,
+                     final IKeyVerifier<T> verifier) {
+        this(path, verifier, new IConstructor.Bypass<T>());
     }
 
-    public ConfigKey(final String path, final T defaultValue, final IKeyVerifier<T> verifier) {
+    public ConfigKey(final String path,
+                     final IKeyVerifier<T> verifier,
+                     final IConstructor<T> constructor) {
+        this(path, null, verifier, constructor);
+    }
+
+    public ConfigKey(final String path, final T defaultValue,
+                     final IKeyVerifier<T> verifier,
+                     final IConstructor<T> constructor) {
         this.verifier = verifier;
         this.defValue = defaultValue;
+        this.constructor = constructor;
         initPath(defaultValue, path);
     }
 
-    public IKeyVerifier<T> verifier()
-    {
+    public IKeyVerifier<T> verifier(){
         return verifier;
     }
+
+    @Override
+    public IConstructor<T> constructor() {
+        return constructor;
+    }
+
     private void initPath(T defaultValue, String path) {
         if (path.contains("."))
             Collections.addAll(keys, path.split("\\."));
