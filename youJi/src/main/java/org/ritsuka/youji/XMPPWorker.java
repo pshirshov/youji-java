@@ -161,7 +161,8 @@ public final class XMPPWorker extends UntypedActor {
     }
 
     public String objId() {
-        return Integer.toHexString(this.hashCode());
+        return selfRef().getUuid().toString();
+        //return Integer.toHexString(this.hashCode());
     }
     public String toString() {
         String connectionId = "offline";

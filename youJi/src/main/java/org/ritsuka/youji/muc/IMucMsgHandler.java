@@ -9,5 +9,6 @@ import org.jivesoftware.smackx.muc.MultiUserChat;
  * Time: 5:25 PM
  */
 public interface IMucMsgHandler {
-    void handleMucMsg(ActorRef worker, MultiUserChat chat, Packet message);
+    IMucMsgHandler setContext(final ActorRef actor, final MultiUserChat chat);
+    void handleMucMsg(final Packet message);
 }

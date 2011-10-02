@@ -17,14 +17,11 @@ import static akka.actor.Actors.actorOf;
  * Time: 9:32 PM
  */
 public final class MessageListenerThreaded implements MessageListener{
-    private final ActorRef worker;
     private final List<IPmHandler> handlers = new ArrayList<IPmHandler>();
 
     public MessageListenerThreaded(final ActorRef worker) {
-        this.worker = worker;
-
         // TODO: add appropriate plugins
-        handlers.add(new TestPmHandler());
+        handlers.add(new TestPmHandler().setContext(worker));
     }
 
     private Log log(final String id) {
@@ -42,7 +39,7 @@ public final class MessageListenerThreaded implements MessageListener{
         }
         for (IPmHandler handler:handlers) {
             ActorRef actor = actorOf(PmActor.create(handler)).start();
-            actor.tell(new PmActorParametersWrapper(worker, chat, message));
+            actor.tell(new PmActorParametersWrapper(chat, message));
         }
     }
 }

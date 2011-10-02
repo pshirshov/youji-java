@@ -9,5 +9,6 @@ import org.jivesoftware.smack.packet.Message;
  * Time: 5:25 PM
  */
 public interface IPmHandler {
-    void handlePm(ActorRef worker, Chat chat,   Message message);
+    IPmHandler setContext(final ActorRef worker);
+    void handlePm(final Chat chat, final Message message);
 }

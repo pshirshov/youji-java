@@ -1,6 +1,5 @@
 package org.ritsuka.youji.pm;
 
-import akka.actor.ActorRef;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.packet.Message;
 
@@ -9,27 +8,19 @@ import org.jivesoftware.smack.packet.Message;
  * Time: 5:44 PM
  */
 public final class PmActorParametersWrapper {
-    private final ActorRef actor;
-    private final Chat chat;
     private final Message message;
+    private Chat chat;
 
-    public PmActorParametersWrapper(final ActorRef actor,
-                                    final Chat chat,
-                                    final Message message) {
-        this.actor = actor;
+    public PmActorParametersWrapper(final Chat chat, final Message message) {
         this.chat = chat;
         this.message = message;
     }
 
-    public ActorRef getActor() {
-        return actor;
+    public Message getMessage() {
+        return message;
     }
 
     public Chat getChat() {
         return chat;
-    }
-
-    public Message getMessage() {
-        return message;
     }
 }

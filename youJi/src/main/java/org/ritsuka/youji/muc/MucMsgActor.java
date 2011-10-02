@@ -26,7 +26,7 @@ public final class MucMsgActor extends UntypedActor {
     public void onReceive(final Object message) {
         if (message instanceof MucMsgActorParametersWrapper){
             MucMsgActorParametersWrapper pm = (MucMsgActorParametersWrapper) message;
-             handler.handleMucMsg(pm.getActor(), pm.getChat(), pm.getMessage());
+             handler.handleMucMsg(pm.getMessage());
         }
         else
             throw new IllegalArgumentException("Unknown message [" + message + "]");

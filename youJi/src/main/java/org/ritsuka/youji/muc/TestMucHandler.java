@@ -10,17 +10,24 @@ import org.ritsuka.youji.util.Log;
 import org.slf4j.LoggerFactory;
 
 public final class TestMucHandler implements IMucMsgHandler {
-    //private XMPPWorker worker;
+    private ActorRef worker;
     private MultiUserChat chat;
 
     private Log log() {
         return new Log(LoggerFactory.getLogger(toString()));
     }
 
+    @Override
+    public IMucMsgHandler setContext(final ActorRef worker, final MultiUserChat chat) {
+        this.worker = worker;
+        this.chat = chat;
+        return this;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("MM.");
-        //sb.append(worker.objId());
+        sb.append(worker.getUuid().toString());
         sb.append(".");
         sb.append(chat.getRoom());
         sb.append("/");
@@ -29,11 +36,7 @@ public final class TestMucHandler implements IMucMsgHandler {
     }
 
     @Override
-    public void handleMucMsg(final ActorRef worker,
-                             final MultiUserChat chat,
-                             final Packet packet) {
-        //this.worker = worker;
-        this.chat = chat;
+    public void handleMucMsg(final Packet packet) {
         Message message = (Message)packet;
 
         String from = message.getFrom();

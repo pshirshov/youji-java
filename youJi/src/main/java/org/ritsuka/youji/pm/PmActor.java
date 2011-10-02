@@ -26,7 +26,7 @@ public final class PmActor extends UntypedActor {
     public void onReceive(final Object message) {
         if (message instanceof PmActorParametersWrapper){
             PmActorParametersWrapper pm = (PmActorParametersWrapper) message;
-             handler.handlePm(pm.getActor(), pm.getChat(), pm.getMessage());
+             handler.handlePm(pm.getChat(), pm.getMessage());
         }
         else
             throw new IllegalArgumentException("Unknown message [" + message + "]");
