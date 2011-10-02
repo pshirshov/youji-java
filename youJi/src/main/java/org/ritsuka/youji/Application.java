@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -27,15 +27,14 @@ public class Application {
     public static void main(final String[] args1) throws InterruptedException {
         YaConfig.verbose = true;
         Constructor constructor = new Constructor();
-        constructor.addTypeDescription(new TypeDescription(URL.class, "!url"));
+        constructor.addTypeDescription(new TypeDescription(URI.class, "!uri"));
         YaConfig.load(constructor);
 
         final CountDownLatch latch = new CountDownLatch(1);
         ShutdownHook shutdownHook = new ShutdownHook(latch);
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
-        System.out.println(YaConfig.get(Config.DB_LOGS));
-        URL url = YaConfig.get(Config.DB_LOGS);
+        URI url = YaConfig.get(Config.DB_LOGS);
         System.out.println(url);
 
         ActorRef master = actorOf(Supervisor.create(latch)).start();

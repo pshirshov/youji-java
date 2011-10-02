@@ -8,7 +8,8 @@ youji:
         - "youji_sagan:BNasdfhk87623#@draugr.de/hooita"
         - "youji_sagan1:BNasdfhk87623#@draugr.de/hooita"
     db:
-        logs: !url  http://ya.ru
+        logs: !uri mongo://user:pass@localhost/youji/logs
+        config: !uri mongo://user:pass@localhost/youji/logs
 
 jvm.properties:
     logback.configurationFile : conf/logback.xml

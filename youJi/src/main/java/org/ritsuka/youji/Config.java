@@ -3,7 +3,7 @@ package org.ritsuka.youji;
 import org.ritsuka.youji.util.yaconfig.ConfigKey;
 import org.ritsuka.youji.util.yaconfig.IKeyVerifier;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 
 
@@ -20,7 +20,7 @@ public final class Config {
     public static final ConfigKey<Integer> MUC_REJOIN_MAXINTERVAL = new ConfigKey<Integer>("youji.muc.rejoin.maxinterval");
 
 
-    public static final ConfigKey<URL> DB_LOGS = new ConfigKey<URL>("youji.db.logs");
+    public static final ConfigKey<URI> DB_LOGS = new ConfigKey<URI>("youji.db.logs");
 
-    public static final ConfigKey<URL> DB_CONFIGS = new ConfigKey<URL>("youji.db.config");
+    public static final ConfigKey<URI> DB_CONFIGS = new ConfigKey<URI>("youji.db.config");
 }
