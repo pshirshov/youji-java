@@ -3,19 +3,10 @@ package org.ritsuka.youji.util.yaconfig;
 import org.apache.commons.lang.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.BaseConstructor;
-/*import org.yaml.snakeyaml.TypeDescription;
-import org.yaml.snakeyaml.constructor.AbstractConstruct;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
-import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.ScalarNode;
-import org.yaml.snakeyaml.nodes.Tag;
-*/
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-/*import java.net.MalformedURLException;
-import java.net.URL;*/
 import java.util.Map;
 import java.util.Set;
 
