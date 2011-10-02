@@ -26,6 +26,7 @@ public final class TestPmHandler implements IPmHandler {
 
     @Override
     public void handlePm(final Chat chat, Message message) {
+        System.out.println(hashCode());
         Log log = log(chat.getParticipant());
         log.debug("PM: {}", message.toXML());
         Message newMessage = new Message();

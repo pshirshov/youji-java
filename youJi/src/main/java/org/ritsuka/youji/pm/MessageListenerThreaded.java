@@ -17,11 +17,18 @@ import static akka.actor.Actors.actorOf;
  * Time: 9:32 PM
  */
 public final class MessageListenerThreaded implements MessageListener{
-    private final List<IPmHandler> handlers = new ArrayList<IPmHandler>();
+    private final ActorRef worker;
 
     public MessageListenerThreaded(final ActorRef worker) {
+        this.worker = worker;
+    }
+
+    private List<IPmHandler> instantiateHandlers(ActorRef worker) {
         // TODO: add appropriate plugins
+        // TODO: is it safe to create only one list per listener? (see muc listener)
+        List<IPmHandler> handlers = new ArrayList<IPmHandler>();
         handlers.add(new TestPmHandler().setContext(worker));
+        return handlers;
     }
 
     private Log log(final String id) {
@@ -37,6 +44,9 @@ public final class MessageListenerThreaded implements MessageListener{
             log.warn("Ignored Err PM: E:{} MSG:{} ({})", message.getError().getMessage(), body, message.toXML());
             return;
         }
+        List<IPmHandler> handlers;
+        handlers = instantiateHandlers(worker);
+
         for (IPmHandler handler:handlers) {
             ActorRef actor = actorOf(PmActor.create(handler)).start();
             actor.tell(new PmActorParametersWrapper(chat, message));
