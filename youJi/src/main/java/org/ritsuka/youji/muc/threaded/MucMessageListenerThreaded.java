@@ -19,15 +19,24 @@ import static akka.actor.Actors.actorOf;
  * Time: 9:32 PM
  */
 public final class MucMessageListenerThreaded implements PacketListener {
-    private final List<IMucMsgHandler> handlers = new ArrayList<IMucMsgHandler>();
+    private final ActorRef worker;
+    private final MultiUserChat chat;
 
     public MucMessageListenerThreaded(final ActorRef a_worker, final MultiUserChat a_chat) {
+        this.worker = a_worker;
+        this.chat = a_chat;
         // TODO: add appropriate plugins
-        handlers.add(new TestMucHandler().setContext(a_worker, a_chat));
+    }
+
+    private List<IMucMsgHandler> instantiateHandlers() {
+        List<IMucMsgHandler> handlers = new ArrayList<IMucMsgHandler>();
+        handlers.add(new TestMucHandler().setContext(worker, chat));
+        return handlers;
     }
 
     @Override
     public void processPacket(final Packet packet) {
+        List<IMucMsgHandler> handlers = instantiateHandlers();
         for (IMucMsgHandler handler:handlers) {
             ActorRef actor = actorOf(MucMsgActor.create(handler)).start();
             actor.tell(new MucMsgActorParametersWrapper(packet));

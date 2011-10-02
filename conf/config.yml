@@ -4,12 +4,10 @@ youji:
         rejoin:
             interval: 4000
             maxinterval: 10000
-    initial-accounts:
-        - "youji_sagan:BNasdfhk87623#@draugr.de/hooita"
-        - "youji_sagan1:BNasdfhk87623#@draugr.de/hooita"
     db:
         logs: !uri mongo://user:pass@localhost/youji/logs
         config: !uri mongo://user:pass@localhost/youji/logs
+    cfg.inclusion: conf/config_incl.yml
 
 jvm.properties:
     logback.configurationFile : conf/logback.xml

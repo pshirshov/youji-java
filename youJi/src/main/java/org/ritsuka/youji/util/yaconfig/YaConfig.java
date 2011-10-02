@@ -6,7 +6,10 @@ import org.yaml.snakeyaml.constructor.BaseConstructor;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,7 +20,7 @@ public final class YaConfig {
     public static Boolean verbose = false;
 
     private Map parsed = null;
-
+    private BaseConstructor constructor = null;
     private static YaConfig config;
 
     public static boolean load() {
@@ -26,26 +29,23 @@ public final class YaConfig {
 
     public static boolean load(final BaseConstructor constructor) {
         config = new YaConfig();
-        return config.loadConfig(constructor);
+        config.constructor = constructor;
+        return config.loadConfig();
     }
 
 
-    public boolean loadConfig(final BaseConstructor constructor) {
+    public boolean loadConfig() {
         String configPath = System.getProperty(CFG_DEFAULT_PROPERTY);
 
         if (configPath == null) {
             configPath = CFG_DEFAULT_PATH;
         }
 
-        final Yaml yaml;
-        if (null != constructor)
-            yaml = new Yaml(constructor);
-        else
-            yaml = new Yaml();
 
         try {
-            InputStream input = new FileInputStream(new File(configPath));
-            parsed = (Map) yaml.load(input);
+            parsed = loadCfgFile(configPath);
+            if (verbose)
+                System.out.print(String.format("YaConfig: dump:\n%s", (new Yaml()).dump(parsed)));
             if (parsed.containsKey(CFG_JVMPROPS_SECTION)) {
                 setProperties((Map) parsed.get(CFG_JVMPROPS_SECTION), "");
             } else if (verbose) {
@@ -63,6 +63,40 @@ public final class YaConfig {
             //throw new ExceptionInInitializerError(e);
         }
         return false;
+    }
+
+    private Map loadCfgFile(String configPath) throws FileNotFoundException {
+        final Yaml yaml;
+        if (null != constructor)
+            yaml = new Yaml(constructor);
+        else
+            yaml = new Yaml();
+
+        InputStream input = new FileInputStream(new File(configPath));
+        return processInclusions((Map) yaml.load(input));
+    }
+
+
+    private Map processInclusions(final Map cfgtree) throws FileNotFoundException {
+        if (null != cfgtree) {
+            Map newtree = new HashMap();
+            Set<Map.Entry> entries = cfgtree.entrySet();
+            for (Map.Entry entry : entries) {
+                String key = (String) entry.getKey();
+                Object value = entry.getValue();
+                if ((value instanceof String) && (key.compareTo("cfg.inclusion") == 0)) {
+                    Map inclusion = loadCfgFile((String)value);
+                    newtree.putAll(inclusion);
+                } else if (value instanceof Map) {
+                    newtree.put(key, processInclusions((Map)value));
+                }
+                else {
+                    newtree.put(key, value);
+                }
+            }
+            return newtree;
+        }
+        return cfgtree;
     }
 
     // set jvm properties using tree structure

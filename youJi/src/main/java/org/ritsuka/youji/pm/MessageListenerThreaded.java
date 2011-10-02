@@ -23,7 +23,7 @@ public final class MessageListenerThreaded implements MessageListener{
         this.worker = worker;
     }
 
-    private List<IPmHandler> instantiateHandlers(ActorRef worker) {
+    private List<IPmHandler> instantiateHandlers() {
         // TODO: add appropriate plugins
         // TODO: is it safe to create only one list per listener? (see muc listener)
         List<IPmHandler> handlers = new ArrayList<IPmHandler>();
@@ -44,8 +44,7 @@ public final class MessageListenerThreaded implements MessageListener{
             log.warn("Ignored Err PM: E:{} MSG:{} ({})", message.getError().getMessage(), body, message.toXML());
             return;
         }
-        List<IPmHandler> handlers;
-        handlers = instantiateHandlers(worker);
+        List<IPmHandler> handlers = instantiateHandlers();
 
         for (IPmHandler handler:handlers) {
             ActorRef actor = actorOf(PmActor.create(handler)).start();
