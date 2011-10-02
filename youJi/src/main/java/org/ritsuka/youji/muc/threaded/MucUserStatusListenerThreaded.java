@@ -11,12 +11,12 @@ import org.ritsuka.youji.muc.event.MUCKicked;
  * Date: 9/29/11
  * Time: 9:32 PM
  */
-public final class MUCUserStatusListenerThreaded
+public final class MucUserStatusListenerThreaded
         implements UserStatusListener {
     private final ActorRef worker;
     private final MultiUserChat chat;
 
-    public MUCUserStatusListenerThreaded(final ActorRef a_worker,
+    public MucUserStatusListenerThreaded(final ActorRef a_worker,
                                          final MultiUserChat a_chat) {
         worker = a_worker;
         chat = a_chat;

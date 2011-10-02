@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Date: 10/2/11
  * Time: 5:37 PM
  */
-public final class TestHandler implements IPmHandler {
+public final class TestPmHandler implements IPmHandler {
     private Log log(final String id) {
         return new Log(LoggerFactory.getLogger(id));
     }

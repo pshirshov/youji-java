@@ -1,6 +1,7 @@
 package org.ritsuka.youji.muc;
 
 import akka.actor.ActorRef;
+import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.util.StringUtils;
@@ -41,9 +42,9 @@ public final class TestMucHandler implements IMucMsgHandler {
         String jid = StringUtils.parseBareAddress(from);
 
         String body = message.getBody();
-        log().debug("{}", body);
-/*        try {
-            if (body.length() < 10)
+        log().debug("{}: {}", nick, body);
+        try {
+            if (body.contains("тест") && (!body.contains("илитарии")))
             {
                 String answer = String.format("Ходят тут всякие илитарии навроде %s: блядь, пишут хуиту навроде '%s'",
                         nick, body);
@@ -52,7 +53,6 @@ public final class TestMucHandler implements IMucMsgHandler {
 
         } catch (XMPPException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }*/
-
+        }
     }
 }

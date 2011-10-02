@@ -8,21 +8,21 @@ import org.ritsuka.youji.util.yaconfig.YaConfig;
  * Date: 9/29/11
  * Time: 11:35 PM
  */
-public final class ConferenceState {
+public final class MucState {
 
-    private ConferenceData confdata = null;
+    private MucData confdata = null;
     private Integer attemptsCount = 0;
     private MultiUserChat muc = null;
     private String lastNick = null;
     private Boolean nickConflict = false;
 
-    public ConferenceState(final ConferenceData a_data,
-                           final MultiUserChat a_chat) {
+    public MucState(final MucData a_data,
+                    final MultiUserChat a_chat) {
         confdata = a_data;
         muc = a_chat;
     }
 
-    public ConferenceData conferenceData() {
+    public MucData conferenceData() {
         return confdata;
     }
 

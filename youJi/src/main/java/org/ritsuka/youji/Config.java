@@ -1,7 +1,7 @@
 package org.ritsuka.youji;
 
 import org.ritsuka.youji.util.yaconfig.ConfigKey;
-import org.ritsuka.youji.util.yaconfig.Foo;
+//import org.ritsuka.youji.util.yaconfig.Foo;
 import org.ritsuka.youji.util.yaconfig.IKeyVerifier;
 import org.ritsuka.youji.util.yaconfig.ReflectConstructor;
 
@@ -33,6 +33,8 @@ public final class Config {
     public static final ConfigKey<URI> DB_CONFIGS =
             new ConfigKey<URI>("youji.db.config");
 
+/*
     public static final ConfigKey<Foo> TEST =
             new ConfigKey<Foo>("test", new ReflectConstructor<Foo>(){});
+*/
 }

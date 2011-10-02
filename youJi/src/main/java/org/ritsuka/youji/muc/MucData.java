@@ -4,10 +4,10 @@ package org.ritsuka.youji.muc;
  * Date: 9/29/11
  * Time: 9:15 PM
  */
-public final class ConferenceData {
+public final class MucData {
     private String nick = null;
 
-    public ConferenceData() {
+    public MucData() {
         nick = "YouJI";
     }
 

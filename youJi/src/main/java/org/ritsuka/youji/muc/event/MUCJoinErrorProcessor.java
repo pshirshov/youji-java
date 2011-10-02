@@ -3,8 +3,8 @@ package org.ritsuka.youji.muc.event;
 import akka.actor.ActorRef;
 import akka.actor.Scheduler;
 import org.jivesoftware.smack.packet.XMPPError;
-import org.ritsuka.youji.muc.ConferenceData;
-import org.ritsuka.youji.muc.ConferenceState;
+import org.ritsuka.youji.muc.MucData;
+import org.ritsuka.youji.muc.MucState;
 import org.ritsuka.youji.util.Log;
 
 import java.util.concurrent.TimeUnit;
@@ -22,9 +22,9 @@ public final class MUCJoinErrorProcessor {
         this.actor = actor;
     }
 
-    public void processMucError(final ConferenceState state,
+    public void processMucError(final MucState state,
                                 final XMPPError error) {
-        ConferenceData conf = state.conferenceData();
+        MucData conf = state.conferenceData();
 
         Integer code = error.getCode();
         switch (code)

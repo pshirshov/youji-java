@@ -18,12 +18,12 @@ import static akka.actor.Actors.actorOf;
  * Date: 9/29/11
  * Time: 9:32 PM
  */
-public final class MUCMessageListenerThreaded implements PacketListener {
+public final class MucMessageListenerThreaded implements PacketListener {
     private final ActorRef worker;
     private final MultiUserChat chat;
     private final List<IMucMsgHandler> handlers = new ArrayList<IMucMsgHandler>();
 
-    public MUCMessageListenerThreaded(final ActorRef a_worker,
+    public MucMessageListenerThreaded(final ActorRef a_worker,
                                       final MultiUserChat a_chat) {
         worker = a_worker;
         chat = a_chat;

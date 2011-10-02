@@ -24,7 +24,7 @@ public final class MessageListenerThreaded implements MessageListener{
         this.worker = worker;
 
         // TODO: add appropriate plugins
-        handlers.add(new TestHandler());
+        handlers.add(new TestPmHandler());
     }
 
     private Log log(final String id) {
@@ -41,8 +41,8 @@ public final class MessageListenerThreaded implements MessageListener{
             return;
         }
         for (IPmHandler handler:handlers) {
-            ActorRef actor = actorOf(PMActor.create(handler)).start();
-            actor.tell(new PMActorParametersWrapper(worker, chat, message));
+            ActorRef actor = actorOf(PmActor.create(handler)).start();
+            actor.tell(new PmActorParametersWrapper(worker, chat, message));
         }
     }
 }

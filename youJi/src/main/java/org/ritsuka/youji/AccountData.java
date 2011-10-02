@@ -1,7 +1,7 @@
 package org.ritsuka.youji;
 
 import org.jivesoftware.smack.util.StringUtils;
-import org.ritsuka.youji.muc.ConferenceData;
+import org.ritsuka.youji.muc.MucData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +42,9 @@ public final class AccountData {
         return resource;
     }
 
-    public List<ConferenceData> conferences() {
-        ArrayList<ConferenceData> conferenceDatas = new ArrayList<ConferenceData>();
-        conferenceDatas.add(new ConferenceData());
+    public List<MucData> conferences() {
+        ArrayList<MucData> conferenceDatas = new ArrayList<MucData>();
+        conferenceDatas.add(new MucData());
         return conferenceDatas;
     }
 

@@ -11,12 +11,12 @@ import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.ritsuka.youji.event.ReconnectedEvent;
 import org.ritsuka.youji.event.RunXmppWorkerEvent;
-import org.ritsuka.youji.muc.ConferenceData;
-import org.ritsuka.youji.muc.ConferenceState;
+import org.ritsuka.youji.muc.MucData;
+import org.ritsuka.youji.muc.MucState;
 import org.ritsuka.youji.muc.event.ForcedMUCLeaveEvent;
 import org.ritsuka.youji.muc.event.MUCJoinErrorProcessor;
-import org.ritsuka.youji.muc.threaded.MUCMessageListenerThreaded;
-import org.ritsuka.youji.muc.threaded.MUCUserStatusListenerThreaded;
+import org.ritsuka.youji.muc.threaded.MucMessageListenerThreaded;
+import org.ritsuka.youji.muc.threaded.MucUserStatusListenerThreaded;
 import org.ritsuka.youji.pm.ChatListenerThreaded;
 import org.ritsuka.youji.util.Log;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public final class XMPPWorker extends UntypedActor {
 
     private Connection connection = null;
     private final AccountData account;
-    private final Map<String, ConferenceState> conferences = new HashMap<String, ConferenceState>();
+    private final Map<String, MucState> conferences = new HashMap<String, MucState>();
 
     public Connection connection() {
         return connection;
@@ -76,24 +76,24 @@ public final class XMPPWorker extends UntypedActor {
 
     private void joinConferences(final AccountData account) {
         log().debug("Joining conferences...");
-        List<ConferenceData> conferences = account.conferences();
-        for (ConferenceData conf : conferences) {
+        List<MucData> conferences = account.conferences();
+        for (MucData conf : conferences) {
             joinConf(conf);
         }
     }
 
-    private void joinConf(final ConferenceData conf) {
+    private void joinConf(final MucData conf) {
         log().debug("Joining to conference: {}", conf);
         if (!connection.isConnected())
             log().error("Connection inactive: {}", conf);
 
         String roomJid = conf.roomJid();
-        ConferenceState state = conferences.get(roomJid);
+        MucState state = conferences.get(roomJid);
         if (null == state) {
             MultiUserChat muc = new MultiUserChat(connection, roomJid);
-            muc.addMessageListener(new MUCMessageListenerThreaded(selfRef(), muc));
-            muc.addUserStatusListener(new MUCUserStatusListenerThreaded(selfRef(), muc));
-            state = new ConferenceState(conf, muc);
+            muc.addMessageListener(new MucMessageListenerThreaded(selfRef(), muc));
+            muc.addUserStatusListener(new MucUserStatusListenerThreaded(selfRef(), muc));
+            state = new MucState(conf, muc);
             conferences.put(roomJid, state);
         }
 
@@ -129,12 +129,6 @@ public final class XMPPWorker extends UntypedActor {
         if (message instanceof RunXmppWorkerEvent){
              init();
         }
-        /*else if (message instanceof TestMucHandler)
-        {
-            TestMucHandler listenerAk = (TestMucHandler)message;
-            listenerAk.setWorker(this);
-            listenerAk.processPacketInActor();
-        }*/
         else if (message instanceof ReconnectedEvent)
         {
             onLoggedIn();
@@ -147,13 +141,13 @@ public final class XMPPWorker extends UntypedActor {
             String reason = event.getReason();
             String descr = event.action();
             log().debug("{}. Room {} by {} with reason {}", descr, room, kicker, reason);
-            ConferenceState conf = conferences.get(event.getChat().getRoom());
+            MucState conf = conferences.get(event.getChat().getRoom());
             assert null != conf;
             joinConf(conf.conferenceData());
         }
-        else if (message instanceof ConferenceData) {
+        else if (message instanceof MucData) {
             if ((null != connection) && connection.isConnected()) {
-                ConferenceData conf = (ConferenceData) message;
+                MucData conf = (MucData) message;
                 joinConf(conf);
             }
         } else
