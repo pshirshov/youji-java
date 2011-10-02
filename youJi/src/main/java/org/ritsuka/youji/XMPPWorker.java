@@ -129,12 +129,12 @@ public class XMPPWorker extends UntypedActor {
         if (message instanceof RunXmppWorkerEvent){
              init();
         }
-        else if (message instanceof MUCMessageListenerAk)
+        /*else if (message instanceof TestMucHandler)
         {
-            MUCMessageListenerAk listenerAk = (MUCMessageListenerAk)message;
+            TestMucHandler listenerAk = (TestMucHandler)message;
             listenerAk.setWorker(this);
             listenerAk.processPacketInActor();
-        }
+        }*/
         else if (message instanceof ReconnectedEvent)
         {
             onLoggedIn();

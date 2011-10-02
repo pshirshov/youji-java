@@ -3,10 +3,14 @@ package org.ritsuka.youji.pm;
 import akka.actor.ActorRef;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.ritsuka.youji.util.Log;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static akka.actor.Actors.actorOf;
 
 /**
  * Date: 9/30/11
@@ -14,9 +18,14 @@ import org.slf4j.LoggerFactory;
  */
 public class MessageListenerThreaded implements MessageListener{
     private ActorRef worker;
+    private List<IPmHandler> handlers;
 
     public MessageListenerThreaded(ActorRef worker) {
         this.worker = worker;
+
+        // TODO: add appropriate plugins
+        handlers = new ArrayList<IPmHandler>();
+        handlers.add(new TestHandler());
     }
 
     private Log log(String id) {
@@ -32,14 +41,9 @@ public class MessageListenerThreaded implements MessageListener{
             log.warn("Ignored Err PM: E:{} MSG:{} ({})", message.getError().getMessage(), body, message.toXML());
             return;
         }
-        log.debug("PM: {}", message.toXML());
-        Message newMessage = new Message();
-        newMessage.setBody("Wtf?");
-        //message.setProperty("favoriteColor", "red");
-        try {
-            chat.sendMessage(newMessage);
-        } catch (XMPPException e) {
-            log.error("Can't send: {}: {}", message.toXML(), e);
+        for (IPmHandler handler:handlers) {
+            ActorRef actor = actorOf(PMActor.create(handler)).start();
+            actor.tell(new PMActorParametersWrapper(worker, chat, message));
         }
     }
 }
