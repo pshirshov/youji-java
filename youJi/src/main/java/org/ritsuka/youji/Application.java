@@ -5,6 +5,8 @@ package org.ritsuka.youji;
 // TODO: reply actors+some kind of plugins
 // TODO: history in mongodb
 // TODO: blogging
+// TODO: ant+maven buildscripts
+// TODO: utils->separate lib
 
 import akka.actor.ActorRef;
 import akka.actor.Actors;
