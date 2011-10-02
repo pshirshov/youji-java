@@ -17,23 +17,30 @@ import java.util.List;
 *            "hibernate", "test", "config.value");
 *  path ("hibernate", "test", "config.value") is equal to "hibernate.test.config.value"
 * */
-public class TypedConfigKey<T> implements ITypedConfigKey<T> {
+public class ConfigKey<T> implements IConfigKey<T> {
     final List<String> keys = new ArrayList<String>();
     final T defValue;
-    final IVerifier<T> verifier;
+    final IKeyVerifier<T> verifier;
 
-    public TypedConfigKey(final T defaultValue, final String path) {
-        this(defaultValue, path, new IVerifier.True<T>());
+    public ConfigKey(final String path) {
+        this(path, null, new IKeyVerifier.True<T>());
     }
 
-    public TypedConfigKey(final T defaultValue, final String path,
-                          final IVerifier<T> verifier) {
+    public ConfigKey(final String path, final T defaultValue) {
+        this(path, defaultValue, new IKeyVerifier.True<T>());
+    }
+
+    public ConfigKey(final String path, final IKeyVerifier<T> verifier) {
+        this(path, null, verifier);
+    }
+
+    public ConfigKey(final String path, final T defaultValue, final IKeyVerifier<T> verifier) {
         this.verifier = verifier;
         this.defValue = defaultValue;
         initPath(defaultValue, path);
     }
 
-    public IVerifier<T> verifier()
+    public IKeyVerifier<T> verifier()
     {
         return verifier;
     }

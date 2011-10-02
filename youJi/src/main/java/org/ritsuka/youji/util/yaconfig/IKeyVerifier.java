@@ -9,8 +9,8 @@ import java.util.List;
  * Date: 10/1/11
  * Time: 4:31 PM
  */
-public interface IVerifier<T> {
-    class True<T> implements IVerifier<T> {
+public interface IKeyVerifier<T> {
+    class True<T> implements IKeyVerifier<T> {
         @Override
         public boolean verify(T value) {
             return true;
@@ -19,7 +19,7 @@ public interface IVerifier<T> {
 
     abstract class ListVerifier<V>
             extends TypeReference<V>
-            implements IVerifier<List<V>> {
+            implements IKeyVerifier<List<V>> {
         @Override
         public boolean verify(List value) {
             for (Object obj: value) {

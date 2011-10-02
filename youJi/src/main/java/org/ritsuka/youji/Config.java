@@ -1,8 +1,9 @@
 package org.ritsuka.youji;
 
-import org.ritsuka.youji.util.yaconfig.IVerifier;
-import org.ritsuka.youji.util.yaconfig.TypedConfigKey;
+import org.ritsuka.youji.util.yaconfig.ConfigKey;
+import org.ritsuka.youji.util.yaconfig.IKeyVerifier;
 
+import java.net.URL;
 import java.util.List;
 
 
@@ -10,23 +11,16 @@ import java.util.List;
  * Date: 10/1/11
  * Time: 3:46 PM
  */
-public final class Config<T> extends TypedConfigKey<T> {
-    public static final Config<List<String>> INITIAL_ACCOUNTS = new Config<List<String>>(
-            null, "youji.initial-accounts",
-            new IVerifier.ListVerifier<String>(){});
+public final class Config {
+    public static final ConfigKey<List<String>> INITIAL_ACCOUNTS = new ConfigKey<List<String>>("youji.initial-accounts",
+            new IKeyVerifier.ListVerifier<String>(){});
 
-    public static final Config<Integer> MUC_REJOIN_INTERVAL = new Config<Integer>(
-            null, "youji.muc.rejoin.interval");
+    public static final ConfigKey<Integer> MUC_REJOIN_INTERVAL = new ConfigKey<Integer>("youji.muc.rejoin.interval");
+
+    public static final ConfigKey<Integer> MUC_REJOIN_MAXINTERVAL = new ConfigKey<Integer>("youji.muc.rejoin.maxinterval");
 
 
-    public static final Config<Integer> MUC_REJOIN_MAXINTERVAL = new Config<Integer>(
-            null, "youji.muc.rejoin.maxinterval");
+    public static final ConfigKey<URL> DB_LOGS = new ConfigKey<URL>("youji.db.logs");
 
-    private Config(final T defaultValue, final String path) {
-        super(defaultValue, path);
-    }
-
-    private Config(final T defaultValue, final String path, IVerifier<T> verifier) {
-        super(defaultValue, path, verifier);
-    }
+    public static final ConfigKey<URL> DB_CONFIGS = new ConfigKey<URL>("youji.db.config");
 }

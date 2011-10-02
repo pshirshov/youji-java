@@ -2,10 +2,20 @@ package org.ritsuka.youji.util.yaconfig;
 
 import org.apache.commons.lang.StringUtils;
 import org.yaml.snakeyaml.Yaml;
-
+import org.yaml.snakeyaml.constructor.BaseConstructor;
+/*import org.yaml.snakeyaml.TypeDescription;
+import org.yaml.snakeyaml.constructor.AbstractConstruct;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
+import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.Tag;
+*/
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+/*import java.net.MalformedURLException;
+import java.net.URL;*/
 import java.util.Map;
 import java.util.Set;
 
@@ -13,17 +23,36 @@ public final class YaConfig {
     private static final String CFG_DEFAULT_PATH = "conf/config.yml";
     private static final String CFG_DEFAULT_PROPERTY = "app.configFile";
     private static final String CFG_JVMPROPS_SECTION = "jvm.properties";
-    private static final Boolean verbose = true;
-    private static Map parsed = null;
+    public static Boolean verbose = false;
 
-    static public boolean loadConfig() {
+    private Map parsed = null;
+
+    private static YaConfig config;
+
+    public static boolean load() {
+        config = new YaConfig();
+        return config.loadConfig(null);
+    }
+
+    public static boolean load(BaseConstructor constructor) {
+        config = new YaConfig();
+        return config.loadConfig(constructor);
+    }
+
+
+    public boolean loadConfig(BaseConstructor constructor) {
         String configPath = System.getProperty(CFG_DEFAULT_PROPERTY);
 
         if (configPath == null) {
             configPath = CFG_DEFAULT_PATH;
         }
 
-        Yaml yaml = new Yaml();
+        Yaml yaml = null;
+        if (null != constructor)
+            yaml = new Yaml(constructor);
+        else
+            yaml = new Yaml();
+
         try {
             InputStream input = new FileInputStream(new File(configPath));
 
@@ -49,7 +78,7 @@ public final class YaConfig {
 
     // set jvm properties using tree structure
     @SuppressWarnings("unchecked")
-    static private void setProperties(Map props, String basepath) {
+    private void setProperties(Map props, String basepath) {
         if (null != props) {
             Set<Map.Entry> entries = props.entrySet();
             for (Map.Entry entry : entries) {
@@ -72,8 +101,8 @@ public final class YaConfig {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T get(ITypedConfigKey<T> key) {
-        Object val = parsed;
+    public static <T> T get(IConfigKey<T> key) {
+        Object val = config.getParsed();
         for (String entry : key.getPath()) {
             if (val instanceof Map) {
                 val = ((Map) val).get(entry);
@@ -90,7 +119,7 @@ public final class YaConfig {
         T assumedVal;
         try {
             assumedVal = (T) val;
-            IVerifier<T> verifier = key.verifier();
+            IKeyVerifier<T> verifier = key.verifier();
             if (!verifier.verify(assumedVal)) {
                 String path = StringUtils.join(key.getPath().toArray());
                 throw new RuntimeException(String.format("Parameter '%s' has invalid value", path));
@@ -100,5 +129,9 @@ public final class YaConfig {
         }
 
         return assumedVal;
+    }
+
+    public Map getParsed() {
+        return parsed;
     }
 }

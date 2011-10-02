@@ -7,6 +7,8 @@ youji:
     initial-accounts:
         - "youji_sagan:BNasdfhk87623#@draugr.de/hooita"
         - "youji_sagan1:BNasdfhk87623#@draugr.de/hooita"
+    db:
+        logs: !url  http://ya.ru
 
 jvm.properties:
     logback.configurationFile : conf/logback.xml

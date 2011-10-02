@@ -11,7 +11,10 @@ import akka.actor.Actors;
 import org.ritsuka.youji.util.Log;
 import org.ritsuka.youji.util.yaconfig.YaConfig;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.TypeDescription;
+import org.yaml.snakeyaml.constructor.Constructor;
 
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -22,11 +25,18 @@ public class Application {
         return new Log(LoggerFactory.getLogger("APP"));
     }
     public static void main(final String[] args1) throws InterruptedException {
-        YaConfig.loadConfig();
+        YaConfig.verbose = true;
+        Constructor constructor = new Constructor();
+        constructor.addTypeDescription(new TypeDescription(URL.class, "!url"));
+        YaConfig.load(constructor);
 
         final CountDownLatch latch = new CountDownLatch(1);
         ShutdownHook shutdownHook = new ShutdownHook(latch);
         Runtime.getRuntime().addShutdownHook(shutdownHook);
+
+        System.out.println(YaConfig.get(Config.DB_LOGS));
+        URL url = YaConfig.get(Config.DB_LOGS);
+        System.out.println(url);
 
         ActorRef master = actorOf(Supervisor.create(latch)).start();
 
