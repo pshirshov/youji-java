@@ -2,7 +2,7 @@
          xmlns:artifact="antlib:org.apache.maven.artifact.ant"
          xmlns:ac="antlib:net.sf.antcontrib">
 
-  <property name="project.pom" location="youJi/pom.xml" />
+  <property name="project.pom" location="pom.xml" />
 
   <target name="resolve" description="--> retrieve dependencies with maven">
     <ac:for param="pomfile">
@@ -24,26 +24,31 @@
     </ac:for>
   </target>
 
-    <target name="clean">
+    <target name="--mvn.clean">
       <artifact:mvn pom="${project.pom}">
         <arg value="clean"/>
       </artifact:mvn>
     </target>
 
-
-    <target name="deploy">
+  <target name="--mvn.deploy">
       <artifact:mvn pom="${project.pom}">
         <arg value="deploy"/>
       </artifact:mvn>
     </target>
 
-    <target name="compile">
+    <target name="--mvn.package">
+      <artifact:mvn pom="${project.pom}">
+        <arg value="package"/>
+      </artifact:mvn>
+    </target>
+
+    <target name="--mvn.compile">
       <artifact:mvn pom="${project.pom}">
         <arg value="compile"/>
       </artifact:mvn>
     </target>
 
-    <target name="all" depends="clean,compile,deploy">
+    <target name="all" depends="--mvn.clean,--mvn.compile,--mvn.package,--mvn.deploy">
     </target>
 
 <!--
