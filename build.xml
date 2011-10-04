@@ -1,22 +1,56 @@
-<project name="youji" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+<project name="youji"
+         xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+         xmlns:ac="antlib:net.sf.antcontrib">
+
+  <property name="project.pom" location="youJi/pom.xml" />
 
   <target name="resolve" description="--> retrieve dependencies with maven">
-      <artifact:dependencies filesetId="dependency.fileset">
-          <pom file="natsuo/pom.xml" />
-          <!--pom file="youJi/pom.xml" /-->
-      </artifact:dependencies>
+    <ac:for param="pomfile">
+      <path>
+        <fileset dir=".">
+          <include name="**/pom.xml"/>
+        </fileset>
+      </path>
+      <sequential>
+        <artifact:dependencies filesetId="dependency.fileset">
+            <pom file="@{pomfile}" />
+        </artifact:dependencies>
 
-      <copy todir="${user.home}/.ant/lib" verbose="true">
-          <fileset refid="dependency.fileset" />
-          <mapper type="flatten" />
-      </copy>
+        <!--copy todir="${user.home}/.ant/lib" verbose="true">
+            <fileset refid="dependency.fileset" />
+            <mapper type="flatten" />
+        </copy-->
+      </sequential>
+    </ac:for>
   </target>
+
+    <target name="clean">
+      <artifact:mvn pom="${project.pom}">
+        <arg value="clean"/>
+      </artifact:mvn>
+    </target>
+
+
+    <target name="deploy">
+      <artifact:mvn pom="${project.pom}">
+        <arg value="deploy"/>
+      </artifact:mvn>
+    </target>
+
+    <target name="compile">
+      <artifact:mvn pom="${project.pom}">
+        <arg value="compile"/>
+      </artifact:mvn>
+    </target>
+
+    <target name="all" depends="clean,compile,deploy">
+    </target>
 
 <!--
     http://ptrthomas.wordpress.com/2009/03/08/why-you-should-use-the-maven-ant-tasks-instead-of-maven-or-ivy/
 -->
 
-    <target name="mvn-init" unless="compile.classpath" xmlns:artifact="urn:maven-artifact-ant">
+    <!--target name="mvn-init" unless="compile.classpath" xmlns:artifact="urn:maven-artifact-ant">
         <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant"
             classpath="lib/maven-ant-tasks.jar"/>
 
@@ -26,7 +60,7 @@
 
         <echo>maven.repo.local=${maven.repo.local}</echo>
         <artifact:localRepository id="local.repository" path="${maven.repo.local}"/>
-        <artifact:pom file="pom.xml" id="maven.project"/>
+        <artifact:pom file="${project.pom}" id="maven.project"/>
         <artifact:dependencies pathId="compile.classpath" filesetId="compile.fileset" useScope="compile">
             <pom refid="maven.project"/>
             <localRepository refid="local.repository"/>
@@ -39,16 +73,5 @@
             <pom refid="maven.project"/>
             <localRepository refid="local.repository"/>
         </artifact:dependencies>
-    </target>
-
-    <target name="compile" depends="mvn-init">
-        <mkdir dir="target/classes"/>
-        <javac srcdir="src/main/java" destdir="target/classes" classpathref="compile.classpath"/>
-        <copy todir="target/classes">
-            <fileset dir="src/main/java" excludes="**/*.java"/>
-        </copy>
-        <copy todir="target/classes" failonerror="false">
-            <fileset dir="src/main/resources"/>
-        </copy>
-    </target>
+    </target-->
 </project>
