@@ -1,4 +1,4 @@
-package org.ritsuka.youji.util.reflection;
+package org.ritsuka.natsuo.reflection;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -30,10 +30,10 @@ public abstract class TypeReference<T> {
      * @param args constructor arguments for referenced type.
      * @return new instance of type token
      *
-     * @throws IllegalAccessException on reflection error
-     * @throws InstantiationException on reflection error
-     * @throws NoSuchMethodException on reflection error
-     * @throws InvocationTargetException on reflection error
+     * @throws IllegalAccessException on org.ritsuka.natsuo.reflection error
+     * @throws InstantiationException on org.ritsuka.natsuo.reflection error
+     * @throws NoSuchMethodException on org.ritsuka.natsuo.reflection error
+     * @throws InvocationTargetException on org.ritsuka.natsuo.reflection error
      * @see IntrospectionUtils#newCompatibleInstance(Class, Object[])
      */
     public final T newInstance(final Object... args)

@@ -1,0 +1,54 @@
+<project name="youji" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+
+  <target name="resolve" description="--> retrieve dependencies with maven">
+      <artifact:dependencies filesetId="dependency.fileset">
+          <pom file="natsuo/pom.xml" />
+          <!--pom file="youJi/pom.xml" /-->
+      </artifact:dependencies>
+
+      <copy todir="${user.home}/.ant/lib" verbose="true">
+          <fileset refid="dependency.fileset" />
+          <mapper type="flatten" />
+      </copy>
+  </target>
+
+<!--
+    http://ptrthomas.wordpress.com/2009/03/08/why-you-should-use-the-maven-ant-tasks-instead-of-maven-or-ivy/
+-->
+
+    <target name="mvn-init" unless="compile.classpath" xmlns:artifact="urn:maven-artifact-ant">
+        <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant"
+            classpath="lib/maven-ant-tasks.jar"/>
+
+        <condition property="maven.repo.local" value="${maven.repo.local}" else="${user.home}/.m2/repository">
+            <isset property="maven.repo.local"/>
+        </condition>
+
+        <echo>maven.repo.local=${maven.repo.local}</echo>
+        <artifact:localRepository id="local.repository" path="${maven.repo.local}"/>
+        <artifact:pom file="pom.xml" id="maven.project"/>
+        <artifact:dependencies pathId="compile.classpath" filesetId="compile.fileset" useScope="compile">
+            <pom refid="maven.project"/>
+            <localRepository refid="local.repository"/>
+        </artifact:dependencies>
+        <artifact:dependencies pathId="test.classpath" filesetId="test.fileset" useScope="test">
+            <pom refid="maven.project"/>
+            <localRepository refid="local.repository"/>
+        </artifact:dependencies>
+        <artifact:dependencies pathId="runtime.classpath" filesetId="runtime.fileset" useScope="runtime">
+            <pom refid="maven.project"/>
+            <localRepository refid="local.repository"/>
+        </artifact:dependencies>
+    </target>
+
+    <target name="compile" depends="mvn-init">
+        <mkdir dir="target/classes"/>
+        <javac srcdir="src/main/java" destdir="target/classes" classpathref="compile.classpath"/>
+        <copy todir="target/classes">
+            <fileset dir="src/main/java" excludes="**/*.java"/>
+        </copy>
+        <copy todir="target/classes" failonerror="false">
+            <fileset dir="src/main/resources"/>
+        </copy>
+    </target>
+</project>

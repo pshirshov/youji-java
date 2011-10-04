@@ -1,9 +1,9 @@
 package org.ritsuka.youji;
 
-import org.ritsuka.youji.util.yaconfig.ConfigKey;
-//import org.ritsuka.youji.util.yaconfig.Foo;
-import org.ritsuka.youji.util.yaconfig.IKeyVerifier;
-import org.ritsuka.youji.util.yaconfig.ReflectConstructor;
+import org.ritsuka.natsuo.yaconfig.ConfigKey;
+//import org.ritsuka.natsuo.yaconfig.Foo;
+import org.ritsuka.natsuo.yaconfig.IKeyVerifier;
+import org.ritsuka.natsuo.yaconfig.ReflectConstructor;
 
 import java.net.URI;
 import java.util.List;

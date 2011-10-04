@@ -1,4 +1,4 @@
-package org.ritsuka.youji.util.yaconfig;
+package org.ritsuka.natsuo.yaconfig;
 
 import java.util.List;
 

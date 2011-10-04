@@ -6,7 +6,7 @@ import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 import org.ritsuka.youji.event.AppShutdownEvent;
 import org.ritsuka.youji.event.RunXmppWorkerEvent;
-import org.ritsuka.youji.util.Log;
+import org.ritsuka.natsuo.Log;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;

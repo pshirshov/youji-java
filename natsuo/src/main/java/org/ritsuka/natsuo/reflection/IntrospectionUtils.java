@@ -1,4 +1,4 @@
-package org.ritsuka.youji.util.reflection;
+package org.ritsuka.natsuo.reflection;
 
 import org.apache.commons.lang.StringUtils;
 

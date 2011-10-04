@@ -10,8 +10,8 @@ package org.ritsuka.youji;
 
 import akka.actor.ActorRef;
 import akka.actor.Actors;
-import org.ritsuka.youji.util.Log;
-import org.ritsuka.youji.util.yaconfig.YaConfig;
+import org.ritsuka.natsuo.Log;
+import org.ritsuka.natsuo.yaconfig.YaConfig;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.constructor.Constructor;

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Maven: natsuo:natsuo:0.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/natsuo/natsuo/0.1/natsuo-0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/natsuo/pom-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/natsuo/natsuo/0.1/natsuo-0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/natsuo/pom-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/natsuo/natsuo/0.1/natsuo-0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

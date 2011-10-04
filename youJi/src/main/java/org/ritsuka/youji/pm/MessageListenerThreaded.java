@@ -4,7 +4,7 @@ import akka.actor.ActorRef;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.packet.Message;
-import org.ritsuka.youji.util.Log;
+import org.ritsuka.natsuo.Log;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;

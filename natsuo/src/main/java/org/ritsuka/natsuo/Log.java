@@ -1,4 +1,4 @@
-package org.ritsuka.youji.util;
+package org.ritsuka.natsuo;
 
 import org.slf4j.Logger;
 

@@ -5,7 +5,7 @@ import akka.actor.Scheduler;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.ritsuka.youji.muc.MucData;
 import org.ritsuka.youji.muc.MucState;
-import org.ritsuka.youji.util.Log;
+import org.ritsuka.natsuo.Log;
 
 import java.util.concurrent.TimeUnit;
 

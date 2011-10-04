@@ -3,7 +3,7 @@ package org.ritsuka.youji;
 import akka.actor.ActorRef;
 import org.jivesoftware.smack.ConnectionListener;
 import org.ritsuka.youji.event.ReconnectedEvent;
-import org.ritsuka.youji.util.Log;
+import org.ritsuka.natsuo.Log;
 import org.slf4j.LoggerFactory;
 
 /**

@@ -18,7 +18,7 @@ import org.ritsuka.youji.muc.event.MUCJoinErrorProcessor;
 import org.ritsuka.youji.muc.threaded.MucMessageListenerThreaded;
 import org.ritsuka.youji.muc.threaded.MucUserStatusListenerThreaded;
 import org.ritsuka.youji.pm.ChatListenerThreaded;
-import org.ritsuka.youji.util.Log;
+import org.ritsuka.natsuo.Log;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
@@ -56,10 +56,11 @@ public final class XMPPWorker extends UntypedActor {
         log().debug("Worker initiated: {}", account);
         try {
             logon();
+            onLoggedIn();
         } catch (XMPPException e) {
             log().debug("Logon error: {}, {}", account, e);
+            selfRef().stop();
         }
-        onLoggedIn();
     }
 
     private void logon() throws XMPPException {

@@ -6,7 +6,7 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.ritsuka.youji.util.Log;
+import org.ritsuka.natsuo.Log;
 import org.slf4j.LoggerFactory;
 
 public final class TestMucHandler implements IMucMsgHandler {

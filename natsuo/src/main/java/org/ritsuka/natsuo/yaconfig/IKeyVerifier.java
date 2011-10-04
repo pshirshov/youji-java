@@ -1,7 +1,7 @@
-package org.ritsuka.youji.util.yaconfig;
+package org.ritsuka.natsuo.yaconfig;
 
 
-import org.ritsuka.youji.util.reflection.TypeReference;
+import org.ritsuka.natsuo.reflection.TypeReference;
 
 import java.util.List;
 

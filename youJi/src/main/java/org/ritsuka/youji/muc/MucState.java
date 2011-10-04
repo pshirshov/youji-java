@@ -2,7 +2,7 @@ package org.ritsuka.youji.muc;
 
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.ritsuka.youji.Config;
-import org.ritsuka.youji.util.yaconfig.YaConfig;
+import org.ritsuka.natsuo.yaconfig.YaConfig;
 
 /**
  * Date: 9/29/11
