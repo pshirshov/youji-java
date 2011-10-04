@@ -7,6 +7,7 @@ import akka.actor.UntypedActorFactory;
 import org.ritsuka.natsuo.Log;
 import org.ritsuka.youji.event.AppShutdownEvent;
 import org.ritsuka.youji.event.RunXmppWorkerEvent;
+import org.ritsuka.youji.util.YoujiActor;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import static akka.actor.Actors.actorOf;
  * Date: 9/29/11
  * Time: 8:48 PM
  */
-public final class Supervisor extends UntypedActor {
+public final class Supervisor extends YoujiActor {
     private final Log log = new Log(LoggerFactory.getLogger("SV"));
     private Log log() {
         return this.log;
@@ -54,7 +55,7 @@ public final class Supervisor extends UntypedActor {
             for (ActorRef worker:workers)
                 worker.stop();
             log().debug("Supervisor ready to shutdown");
-            ((ActorRef)self()).stop();
+            selfRef().stop();
         } else {
             throw new IllegalArgumentException("Unknown message [" +message + "]");
         }

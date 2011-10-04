@@ -21,6 +21,7 @@ import org.ritsuka.youji.muc.MucUserStatusListenerThreaded;
 import org.ritsuka.youji.muc.event.ForcedMUCLeaveEvent;
 import org.ritsuka.youji.muc.event.MUCJoinErrorProcessor;
 import org.ritsuka.youji.pm.ChatListenerThreaded;
+import org.ritsuka.youji.util.YoujiActor;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  * Date: 9/29/11
  * Time: 7:51 PM
  */
-public final class XMPPWorker extends UntypedActor {
+public final class XMPPWorker extends YoujiActor {
     private Log log() {
         return new Log(LoggerFactory.getLogger(toString()));
     }
@@ -121,11 +122,6 @@ public final class XMPPWorker extends UntypedActor {
             }
         }
     }
-
-    private ActorRef selfRef() {
-        return (ActorRef)self();
-    }
-
 
     private void onLoggedIn() {
         joinConferences(account);

@@ -4,13 +4,14 @@ import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 import org.ritsuka.natsuo.Log;
+import org.ritsuka.youji.util.YoujiActor;
 import org.slf4j.LoggerFactory;
 
 /**
  * Date: 10/2/11
  * Time: 5:41 PM
  */
-public final class PmActor extends UntypedActor {
+public final class PmActor extends YoujiActor {
     private Log log() {
         return new Log(LoggerFactory.getLogger(PmActor.class));
     }
@@ -35,7 +36,7 @@ public final class PmActor extends UntypedActor {
             try {
                 handler.handlePm(pm.getChat(), pm.getMessage());
             } finally {
-                ((ActorRef)self()).stop();
+               selfRef().stop();
             }
         }
         else

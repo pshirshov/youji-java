@@ -4,13 +4,14 @@ import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 import org.ritsuka.natsuo.Log;
+import org.ritsuka.youji.util.YoujiActor;
 import org.slf4j.LoggerFactory;
 
 /**
  * Date: 10/2/11
  * Time: 5:41 PM
  */
-final class MucMsgActor extends UntypedActor {
+final class MucMsgActor extends YoujiActor {
     private final IMucMsgHandler handler;
     private Log log() {
         return new Log(LoggerFactory.getLogger(MucMsgActor.class));
@@ -35,7 +36,7 @@ final class MucMsgActor extends UntypedActor {
             try {
                 handler.handleMucMsg(pm.getMessage());
             } finally {
-                ((ActorRef)self()).stop();
+                selfRef().stop();
             }
         }
         else
