@@ -98,8 +98,8 @@ public final class XMPPWorker extends UntypedActor {
         MucState state = conferences.get(roomJid);
         if (null == state) {
             MultiUserChat muc = new MultiUserChat(connection, roomJid);
-            muc.addMessageListener(new MucMessageListenerThreaded(selfRef(), muc));
-            muc.addUserStatusListener(new MucUserStatusListenerThreaded(selfRef(), muc));
+            muc.addMessageListener(new MucData.MucMessageListenerThreaded(selfRef(), muc));
+            muc.addUserStatusListener(new MucData.MucUserStatusListenerThreaded(selfRef(), muc));
             state = new MucState(conf, muc);
             conferences.put(roomJid, state);
         }
