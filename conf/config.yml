@@ -1,5 +1,8 @@
 ---
 youji:
+    reconnect:
+      interval: 20000
+
     muc:
         rejoin:
             interval: 4000

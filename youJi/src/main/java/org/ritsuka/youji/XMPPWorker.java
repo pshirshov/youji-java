@@ -1,6 +1,7 @@
 package org.ritsuka.youji;
 
 import akka.actor.ActorRef;
+import akka.actor.Scheduler;
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 import org.jivesoftware.smack.ChatManager;
@@ -9,6 +10,7 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.natsuo.yaconfig.YaConfig;
 import org.ritsuka.youji.event.ReconnectedEvent;
 import org.ritsuka.youji.event.RunXmppWorkerEvent;
 import org.ritsuka.youji.muc.MucData;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Date: 9/29/11
@@ -56,11 +59,14 @@ public final class XMPPWorker extends UntypedActor {
         log().debug("Worker initiated: {}", account);
         try {
             logon();
-            onLoggedIn();
         } catch (XMPPException e) {
-            log().debug("Logon error: {}, {}", account, e);
-            selfRef().stop();
+            final Integer retryPause = YaConfig.get(Config.RECONNECT_INTERVAL);
+            log().debug("Authorization error for accout {}: {}, retry in {}", account, e, retryPause);
+            Scheduler.scheduleOnce(selfRef(), new RunXmppWorkerEvent(), retryPause, TimeUnit.MILLISECONDS);
+            //selfRef().stop();
+            return;
         }
+        onLoggedIn();
     }
 
     private void logon() throws XMPPException {

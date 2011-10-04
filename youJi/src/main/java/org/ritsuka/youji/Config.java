@@ -21,6 +21,9 @@ public final class Config {
             new ConfigKey<List<String>>("youji.initial-accounts",
                 new IKeyVerifier.ListVerifier<String>(){});
 
+    public static final ConfigKey<Integer> RECONNECT_INTERVAL =
+            new ConfigKey<Integer>("youji.reconnect.interval");
+
     public static final ConfigKey<Integer> MUC_REJOIN_INTERVAL =
             new ConfigKey<Integer>("youji.muc.rejoin.interval");
 
