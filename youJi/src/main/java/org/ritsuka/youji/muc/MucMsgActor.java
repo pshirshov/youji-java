@@ -2,6 +2,8 @@ package org.ritsuka.youji.muc;
 
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
+import org.ritsuka.natsuo.Log;
+import org.slf4j.LoggerFactory;
 
 /**
  * Date: 10/2/11
@@ -9,6 +11,9 @@ import akka.actor.UntypedActorFactory;
  */
 final class MucMsgActor extends UntypedActor {
     private final IMucMsgHandler handler;
+    private Log log() {
+        return new Log(LoggerFactory.getLogger(MucMsgActor.class));
+    }
 
     public static UntypedActorFactory create(final IMucMsgHandler handler) {
         return new UntypedActorFactory() {
@@ -30,5 +35,9 @@ final class MucMsgActor extends UntypedActor {
         }
         else
             throw new IllegalArgumentException("Unknown message [" + message + "]");
+    }
+    @Override
+    public void postStop() {
+        log().debug("MucActor ended");
     }
 }

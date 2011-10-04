@@ -4,6 +4,8 @@ import akka.actor.ActorRef;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.youji.handlers.GoogleIt;
+import org.ritsuka.youji.handlers.TestMucHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public final class MucMessageListenerThreaded implements PacketListener {
     private List<IMucMsgHandler> instantiateHandlers() {
         List<IMucMsgHandler> handlers = new ArrayList<IMucMsgHandler>();
         handlers.add(new TestMucHandler().setContext(worker, chat));
+        handlers.add(new GoogleIt().setContext(worker, chat));
         return handlers;
     }
 

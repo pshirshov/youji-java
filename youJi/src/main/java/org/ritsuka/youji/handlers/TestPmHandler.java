@@ -1,10 +1,11 @@
-package org.ritsuka.youji.pm;
+package org.ritsuka.youji.handlers;
 
 import akka.actor.ActorRef;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.ritsuka.natsuo.Log;
+import org.ritsuka.youji.pm.IPmHandler;
 import org.slf4j.LoggerFactory;
 
 /**

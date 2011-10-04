@@ -1,4 +1,4 @@
-package org.ritsuka.youji.muc;
+package org.ritsuka.youji.handlers;
 
 import akka.actor.ActorRef;
 import org.jivesoftware.smack.XMPPException;
@@ -7,6 +7,7 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.ritsuka.natsuo.Log;
+import org.ritsuka.youji.muc.IMucMsgHandler;
 import org.slf4j.LoggerFactory;
 
 public final class TestMucHandler implements IMucMsgHandler {

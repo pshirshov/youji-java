@@ -5,6 +5,8 @@ import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.packet.Message;
 import org.ritsuka.natsuo.Log;
+import org.ritsuka.youji.handlers.GoogleIt;
+import org.ritsuka.youji.handlers.TestPmHandler;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
@@ -27,7 +29,8 @@ public final class MessageListenerThreaded implements MessageListener{
         // TODO: add appropriate plugins
         // TODO: is it safe to create only one list per listener? (see muc listener)
         List<IPmHandler> handlers = new ArrayList<IPmHandler>();
-        handlers.add(new TestPmHandler().setContext(worker));
+        //handlers.add(new TestPmHandler().setContext(worker));
+        handlers.add(new GoogleIt().setContext(worker));
         return handlers;
     }
 
