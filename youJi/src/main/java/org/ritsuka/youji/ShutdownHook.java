@@ -1,7 +1,7 @@
 package org.ritsuka.youji;
 
-import org.ritsuka.youji.event.AppShutdownEvent;
 import org.ritsuka.natsuo.Log;
+import org.ritsuka.youji.event.AppShutdownEvent;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CountDownLatch;

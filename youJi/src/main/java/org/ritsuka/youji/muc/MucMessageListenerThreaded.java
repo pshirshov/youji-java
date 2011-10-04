@@ -1,13 +1,9 @@
-package org.ritsuka.youji.muc.threaded;
+package org.ritsuka.youji.muc;
 
 import akka.actor.ActorRef;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.ritsuka.youji.muc.IMucMsgHandler;
-import org.ritsuka.youji.muc.MucMsgActor;
-import org.ritsuka.youji.muc.MucMsgActorParametersWrapper;
-import org.ritsuka.youji.muc.TestMucHandler;
 
 import java.util.ArrayList;
 import java.util.List;

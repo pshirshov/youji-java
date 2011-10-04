@@ -10,17 +10,17 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.natsuo.Log;
 import org.ritsuka.natsuo.yaconfig.YaConfig;
 import org.ritsuka.youji.event.ReconnectedEvent;
 import org.ritsuka.youji.event.RunXmppWorkerEvent;
 import org.ritsuka.youji.muc.MucData;
+import org.ritsuka.youji.muc.MucMessageListenerThreaded;
 import org.ritsuka.youji.muc.MucState;
+import org.ritsuka.youji.muc.MucUserStatusListenerThreaded;
 import org.ritsuka.youji.muc.event.ForcedMUCLeaveEvent;
 import org.ritsuka.youji.muc.event.MUCJoinErrorProcessor;
-import org.ritsuka.youji.muc.threaded.MucMessageListenerThreaded;
-import org.ritsuka.youji.muc.threaded.MucUserStatusListenerThreaded;
 import org.ritsuka.youji.pm.ChatListenerThreaded;
-import org.ritsuka.natsuo.Log;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
@@ -98,8 +98,8 @@ public final class XMPPWorker extends UntypedActor {
         MucState state = conferences.get(roomJid);
         if (null == state) {
             MultiUserChat muc = new MultiUserChat(connection, roomJid);
-            muc.addMessageListener(new MucData.MucMessageListenerThreaded(selfRef(), muc));
-            muc.addUserStatusListener(new MucData.MucUserStatusListenerThreaded(selfRef(), muc));
+            muc.addMessageListener(new MucMessageListenerThreaded(selfRef(), muc));
+            muc.addUserStatusListener(new MucUserStatusListenerThreaded(selfRef(), muc));
             state = new MucState(conf, muc);
             conferences.put(roomJid, state);
         }

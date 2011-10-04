@@ -1,8 +1,8 @@
 package org.ritsuka.youji.muc;
 
 import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.ritsuka.youji.Config;
 import org.ritsuka.natsuo.yaconfig.YaConfig;
+import org.ritsuka.youji.Config;
 
 /**
  * Date: 9/29/11

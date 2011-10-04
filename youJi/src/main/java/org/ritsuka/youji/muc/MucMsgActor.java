@@ -7,7 +7,7 @@ import akka.actor.UntypedActorFactory;
  * Date: 10/2/11
  * Time: 5:41 PM
  */
-public final class MucMsgActor extends UntypedActor {
+final class MucMsgActor extends UntypedActor {
     private final IMucMsgHandler handler;
 
     public static UntypedActorFactory create(final IMucMsgHandler handler) {
