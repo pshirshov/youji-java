@@ -32,8 +32,11 @@ public final class PmActor extends UntypedActor {
     public void onReceive(final Object message) {
         if (message instanceof PmActorParametersWrapper){
             PmActorParametersWrapper pm = (PmActorParametersWrapper) message;
-             handler.handlePm(pm.getChat(), pm.getMessage());
-            ((ActorRef)self()).stop();
+            try {
+                handler.handlePm(pm.getChat(), pm.getMessage());
+            } finally {
+                ((ActorRef)self()).stop();
+            }
         }
         else
             throw new IllegalArgumentException("Unknown message [" + message + "]");
@@ -41,6 +44,5 @@ public final class PmActor extends UntypedActor {
 
     @Override
     public void postStop() {
-        log().debug("PMActor ended");
     }
 }
