@@ -2,16 +2,19 @@ package org.ritsuka.youji.handlers;
 
 import akka.actor.ActorRef;
 import com.google.gson.Gson;
+//import org.apache.commons.lang.StringUtils;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Packet;
-import org.jivesoftware.smack.packet.PacketExtension;
+import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.natsuo.Log;
 import org.ritsuka.youji.muc.IMucMsgHandler;
 import org.ritsuka.youji.pm.IPmHandler;
 import org.ritsuka.youji.util.CommandParser;
 import org.ritsuka.youji.util.HTTPGet;
+import org.ritsuka.youji.util.XMPPUtil;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -23,6 +26,10 @@ public class GoogleIt implements IPmHandler, IMucMsgHandler{
 
     private ActorRef worker;
     private MultiUserChat muc;
+
+    private Log log() {
+        return new Log(LoggerFactory.getLogger(GoogleIt.class));
+    }
 
     private final class SearchResult {
         private String titleNoFormatting;
@@ -39,6 +46,10 @@ public class GoogleIt implements IPmHandler, IMucMsgHandler{
 
         public String getContent() {
             return content;
+        }
+
+        public String getPlainContent() {
+            return content.replaceAll("(<b>)|(</b>)", "");
         }
 
         public void setContent(String content) {
@@ -94,12 +105,17 @@ public class GoogleIt implements IPmHandler, IMucMsgHandler{
         return this;
     }
 
+
+
     @Override
-    public void handleMucMsg(Packet message) {
-        if (null != message.getExtension("urn:xmpp:delay"))
+    public void handleMucMsg(Message message) {
+        if (!XMPPUtil.isUsualMessage(message))
             return;
 
-        Message reply = googleIt(((Message)message).getBody());
+        if (XMPPUtil.isYoujiMessage(message, muc))
+            return;
+        Message reply = googleIt(message.getBody(), message);
+
         if (null == reply)
             return;
 
@@ -120,7 +136,7 @@ public class GoogleIt implements IPmHandler, IMucMsgHandler{
 
     @Override
     public void handlePm(Chat chat, Message message) {
-        Message reply = googleIt(message.getBody());
+        Message reply = googleIt(message.getBody(), message);
         if (null == reply)
             return;
         try {
@@ -130,50 +146,73 @@ public class GoogleIt implements IPmHandler, IMucMsgHandler{
         }
     }
 
-    private Message googleIt(final String rawQuery) {
+    private Message googleIt(final String rawQuery, Message sourceMessage) {
         String query = rawQuery;
         CommandParser.ParsedCommand cmd = new CommandParser(rawQuery).parse();
         if (null == cmd)
             return null;
 
-        if (cmd.is("g") || cmd.is("г")) {
-            query = cmd.getRawArg();
-            Message reply = new Message();
+        if (!(cmd.is("g") || cmd.is("г")))
+            return null;
 
-            query = HTTPGet.urlencode(query);
-            String urlToLoad = String.format("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=%s&hl=ru", query);
-            try {
-                String output = HTTPGet.getHTML(urlToLoad);
-                GoogleSearchResult result = (new Gson()).fromJson(output, GoogleSearchResult.class);
-                StringBuilder sb = new StringBuilder();
-                ResponseData response = result.getResponseData();
-                if (null != response) {
-                    List<SearchResult> results = response.getResults();
-                    if (null != results) {
-                        for (SearchResult link: results) {
-                            sb.append(link.getTitleNoFormatting());
-                            sb.append('\n');
-                            sb.append(":: ");
-                            sb.append(link.getUnescapedUrl());
-                            sb.append('\n');
-                            sb.append(":: ");
-                            sb.append(link.getContent());
-                            sb.append("\n\n");
-                        }
-                        reply.setBody(sb.toString());
-                    }
-                    else
-                        reply.setBody("Nothing found");
-                } else {
-                    reply.setBody("Can't parse google's reply: " + output);
+        query = cmd.getRawArg();
+        Message reply = new Message();
+
+        query = HTTPGet.urlencode(query);
+        String urlToLoad = String.format("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=%s&hl=ru", query);
+        try {
+            String output = HTTPGet.getHTML(urlToLoad);
+            GoogleSearchResult result = (new Gson()).fromJson(output, GoogleSearchResult.class);
+            ResponseData response = result.getResponseData();
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(StringUtils.parseResource(sourceMessage.getFrom()));
+            sb.append(", here is response for your request: ");
+
+            if (null != response) {
+                List<SearchResult> results = response.getResults();
+                if (null != results && results.size() > 0) {
+                    sb.append('\n').append(linksToMessage(reply, results));
                 }
-
-            } catch (Throwable e) {
-                reply.setBody(e.toString());
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                else
+                    sb.append("Nothing found");
+            } else {
+                sb.append("Can't parse google's reply: ").append(output);
             }
-            return reply;
+            reply.setBody(sb.toString());
+
+        } catch (Throwable e) {
+            String error = e.toString();
+            log().error("Can't process google request: {}", error);
+            reply.setBody("Error processing request: "+error);
+            e.printStackTrace();
         }
-        return null;
+        return reply;
+    }
+
+    private String linksToMessage(Message reply, List<SearchResult> results) {
+        StringBuilder sb = new StringBuilder();
+        //StringBuilder sxb = new StringBuilder();
+        for (SearchResult link: results) {
+            String title = link.getTitleNoFormatting();
+            String url = link.getUnescapedUrl();
+
+            /*sxb.append("<a href=\"");
+            sxb.append(link);
+            sxb.append("\">");
+            sxb.append(link.getContent());
+            sxb.append("</a><br/>");*/
+
+            sb.append("{");
+            sb.append(title);
+            sb.append("}\n");
+            sb.append(url);
+            sb.append("\n");
+            sb.append(link.getPlainContent());
+            sb.append("\n\n");
+        }
+
+        //XHTMLManager.addBody(reply, sxb.toString());
+        return sb.toString();
     }
 }

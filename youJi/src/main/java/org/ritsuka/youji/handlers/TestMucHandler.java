@@ -37,9 +37,7 @@ public final class TestMucHandler implements IMucMsgHandler {
     }
 
     @Override
-    public void handleMucMsg(final Packet packet) {
-        Message message = (Message)packet;
-
+    public void handleMucMsg(final Message message) {
         String from = message.getFrom();
         String nick = StringUtils.parseResource(from);
         //String confName = StringUtils.parseName(from);

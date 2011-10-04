@@ -1,19 +1,19 @@
 package org.ritsuka.youji.muc;
 
-import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.packet.Message;
 
 /**
  * Date: 10/2/11
  * Time: 5:44 PM
  */
 final class MucMsgActorParametersWrapper {
-    private final Packet packet;
+    private final Message message;
 
-    public MucMsgActorParametersWrapper(final Packet packet) {
-        this.packet = packet;
+    public MucMsgActorParametersWrapper(final Message message) {
+        this.message = message;
     }
 
-    public Packet getMessage() {
-        return packet;
+    public Message getMessage() {
+        return message;
     }
 }

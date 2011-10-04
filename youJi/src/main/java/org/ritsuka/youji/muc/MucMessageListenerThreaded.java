@@ -2,8 +2,10 @@ package org.ritsuka.youji.muc;
 
 import akka.actor.ActorRef;
 import org.jivesoftware.smack.PacketListener;
+import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.ritsuka.youji.handlers.Debug;
 import org.ritsuka.youji.handlers.GoogleIt;
 import org.ritsuka.youji.handlers.TestMucHandler;
 
@@ -30,6 +32,7 @@ public final class MucMessageListenerThreaded implements PacketListener {
         List<IMucMsgHandler> handlers = new ArrayList<IMucMsgHandler>();
         handlers.add(new TestMucHandler().setContext(worker, chat));
         handlers.add(new GoogleIt().setContext(worker, chat));
+        handlers.add(new Debug().setContext(worker, chat));
         return handlers;
     }
 
@@ -38,7 +41,9 @@ public final class MucMessageListenerThreaded implements PacketListener {
         List<IMucMsgHandler> handlers = instantiateHandlers();
         for (IMucMsgHandler handler:handlers) {
             ActorRef actor = actorOf(MucMsgActor.create(handler)).start();
-            actor.tell(new MucMsgActorParametersWrapper(packet));
+            Message msg = (Message)packet;
+            assert null != msg;
+            actor.tell(new MucMsgActorParametersWrapper(msg));
         }
     }
 }

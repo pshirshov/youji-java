@@ -1,5 +1,7 @@
 package org.ritsuka.youji.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -16,7 +18,7 @@ public class CommandParser {
     public class ParsedCommand {
         private final String name;
         private final String rawArg;
-        private final List<String> args;
+        private List<String> args;
         private final Map<String, String> kwargs;
 
         public ParsedCommand(String name, String rawArg) {
@@ -24,6 +26,14 @@ public class CommandParser {
             this.rawArg = rawArg;
             this.args = null;
             this.kwargs = null;
+            parseArgs();
+        }
+
+        private void parseArgs() {
+            String[] splitted = rawArg.split("\\s+");
+            args = new ArrayList<String>(Arrays.asList(splitted));
+            for (String s : args)
+                System.err.println(s);
         }
 
         public boolean is(String cmd){

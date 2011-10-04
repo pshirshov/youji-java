@@ -1,5 +1,6 @@
 package org.ritsuka.youji.muc;
 
+import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 import org.ritsuka.natsuo.Log;
@@ -32,6 +33,7 @@ final class MucMsgActor extends UntypedActor {
         if (message instanceof MucMsgActorParametersWrapper){
             MucMsgActorParametersWrapper pm = (MucMsgActorParametersWrapper) message;
              handler.handleMucMsg(pm.getMessage());
+            ((ActorRef)self()).stop();
         }
         else
             throw new IllegalArgumentException("Unknown message [" + message + "]");

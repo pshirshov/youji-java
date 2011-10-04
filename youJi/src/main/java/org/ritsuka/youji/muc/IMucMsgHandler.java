@@ -1,6 +1,7 @@
 package org.ritsuka.youji.muc;
 
 import akka.actor.ActorRef;
+import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 
@@ -10,5 +11,5 @@ import org.jivesoftware.smackx.muc.MultiUserChat;
  */
 public interface IMucMsgHandler {
     IMucMsgHandler setContext(final ActorRef worker, final MultiUserChat chat);
-    void handleMucMsg(final Packet message);
+    void handleMucMsg(final Message message);
 }

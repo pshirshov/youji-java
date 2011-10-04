@@ -5,6 +5,7 @@ import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.packet.Message;
 import org.ritsuka.natsuo.Log;
+import org.ritsuka.youji.handlers.Debug;
 import org.ritsuka.youji.handlers.GoogleIt;
 import org.ritsuka.youji.handlers.TestPmHandler;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public final class MessageListenerThreaded implements MessageListener{
         List<IPmHandler> handlers = new ArrayList<IPmHandler>();
         //handlers.add(new TestPmHandler().setContext(worker));
         handlers.add(new GoogleIt().setContext(worker));
+        handlers.add(new Debug().setContext(worker));
         return handlers;
     }
 
