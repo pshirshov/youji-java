@@ -2,7 +2,6 @@ package org.ritsuka.youji.handlers;
 
 import akka.actor.ActorRef;
 import com.google.gson.Gson;
-//import org.apache.commons.lang.StringUtils;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;

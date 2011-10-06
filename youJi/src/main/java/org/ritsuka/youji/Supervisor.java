@@ -51,11 +51,14 @@ public final class Supervisor extends YoujiActor {
             worker.tell(new RunXmppWorkerEvent(), getContext());
         } else if (message instanceof AppShutdownEvent)
         {
+            try {
             ActorRef[] workers = Actors.registry().actorsFor(XMPPWorker.class);
             for (ActorRef worker:workers)
                 worker.stop();
             log().debug("Supervisor ready to shutdown");
-            selfRef().stop();
+            } finally {
+                selfRef().stop();
+            }
         } else {
             throw new IllegalArgumentException("Unknown message [" +message + "]");
         }
