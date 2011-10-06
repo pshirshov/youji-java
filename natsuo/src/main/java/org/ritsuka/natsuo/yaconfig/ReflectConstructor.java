@@ -78,33 +78,34 @@ public abstract class ReflectConstructor<T>
 
         // finding out class definition
         if (classDef.size() != 1) {
-            throw abort("incorrect mapping found while parsing constructor");
+            throw abort("incorrect mapping %s found while parsing constructor");
         }
         Map.Entry objectDef = classDef.entrySet().iterator().next();
 
         Object classNameDef = objectDef.getKey();
         if (!(classNameDef instanceof String)) {
-            throw abort("class name expected");
+            throw abort("class name definition expected:'%s'", classNameDef);
         }
         String className = (String) classNameDef;
 
         Object classModifiersDef = objectDef.getValue();
         if (!(classModifiersDef instanceof Map)) {
-            throw abort("incorrect constructor definition found");
+            throw abort("incorrect class definition:'%s'", classModifiersDef);
         }
 
         Map<?, ?> classModifiers = (Map) classModifiersDef;
         if (classModifiers.size() > 2
             || (!classModifiers.containsKey("new")
                 && !classModifiers.containsKey("set"))) {
-            throw abort("unexpected class modifiers found");
+            throw abort("unexpected class definition:'%s'", classModifiers);
         }
 
         List<Object> params = new ArrayList<Object>();
         if (classModifiers.containsKey("new")) {
             Object constructorParamsDef = classModifiers.get("new");
             if (!(constructorParamsDef instanceof List)) {
-                throw abort("unexpected constructor parameters found");
+                throw abort("unexpected constructor parameters definition:'%s'",
+                        constructorParamsDef);
             }
 
             List constructorParams = (List) constructorParamsDef;
@@ -121,7 +122,7 @@ public abstract class ReflectConstructor<T>
         if (classModifiers.containsKey("set")) {
             Object settersDef = classModifiers.get("set");
             if (!(settersDef instanceof Map)) {
-                throw abort("constructor parameters found");
+                throw abort("unexpected setters definition:'%s'", settersDef);
             }
 
             Map<?, ?> settersParams = (Map) settersDef;
@@ -130,7 +131,7 @@ public abstract class ReflectConstructor<T>
                 Object setterVal = setterDef.getValue();
 
                 if (!(setterName instanceof String)) {
-                    throw abort("unexpected setter name: " + setterDef);
+                    throw abort("unexpected setter name:'%s'", setterName);
                 }
                 setters.put((String) setterName, setterVal);
             }
@@ -142,9 +143,11 @@ public abstract class ReflectConstructor<T>
         return newObject;
     }
 
-    private IllegalArgumentException abort(final String message) {
-        return new IllegalArgumentException(
-                message + " for [" + getTypeClass().getCanonicalName() + ']');
+    private IllegalArgumentException abort(final String message,
+                                           final Object ... args) {
+        return new IllegalArgumentException(String.format(String.format(
+                "%s for [%s]", message, getTypeClass().getCanonicalName())
+                , args));
     }
 
     private Object makeObject(final String className, final Object... args)
