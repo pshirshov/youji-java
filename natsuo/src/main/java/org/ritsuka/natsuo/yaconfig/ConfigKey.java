@@ -3,6 +3,7 @@ package org.ritsuka.natsuo.yaconfig;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Date: 10/1/11
@@ -20,48 +21,39 @@ import java.util.List;
 public final class ConfigKey<T> implements IConfigKey<T> {
     private final List<String> keys = new ArrayList<String>();
     private final T defValue;
-    private final IKeyVerifier<T> verifier;
-    private final IConstructor<T> constructor;
+    private final AtomicReference<IKeyVerifier<T>> verifier =
+            new AtomicReference<IKeyVerifier<T>>(new IKeyVerifier.True<T>());
+    private final AtomicReference<IConstructor<T>> constructor =
+            new AtomicReference<IConstructor<T>>(new IConstructor.Bypass<T>());
 
     public ConfigKey(final String path) {
-        this(path, new IKeyVerifier.True<T>());
-    }
-
-    public ConfigKey(final String path, final IConstructor<T> constructor) {
-        this(path, new IKeyVerifier.True<T>(), constructor);
+        this(path, null);
     }
 
     public ConfigKey(final String path, final T defaultValue) {
-        this(path, defaultValue, new IKeyVerifier.True<T>(), new IConstructor.Bypass<T>());
-    }
-
-    public ConfigKey(final String path,
-                     final IKeyVerifier<T> verifier) {
-        this(path, verifier, new IConstructor.Bypass<T>());
-    }
-
-    public ConfigKey(final String path,
-                     final IKeyVerifier<T> verifier,
-                     final IConstructor<T> constructor) {
-        this(path, null, verifier, constructor);
-    }
-
-    public ConfigKey(final String path, final T defaultValue,
-                     final IKeyVerifier<T> verifier,
-                     final IConstructor<T> constructor) {
-        this.verifier = verifier;
         this.defValue = defaultValue;
-        this.constructor = constructor;
         initPath(path);
     }
 
-    public IKeyVerifier<T> verifier(){
-        return verifier;
+    public IKeyVerifier<T> getVerifier(){
+        return verifier.get();
     }
 
     @Override
-    public IConstructor<T> constructor() {
-        return constructor;
+    public IConfigKey<T> setVerifier(final IKeyVerifier<T> verifier) {
+        this.verifier.set(verifier);
+        return this;
+    }
+
+    @Override
+    public IConfigKey<T> setConstructor(final IConstructor<T> constructor) {
+        this.constructor.set(constructor);
+        return this;
+    }
+
+    @Override
+    public IConstructor<T> getConstructor() {
+        return constructor.get();
     }
 
     private void initPath(final String path) {

@@ -147,8 +147,8 @@ public final class YaConfig {
 
         T assumedVal;
         try {
-            IKeyVerifier<T> verifier = key.verifier();
-            IConstructor<T> constructor = key.constructor();
+            IKeyVerifier<T> verifier = key.getVerifier();
+            IConstructor<T> constructor = key.getConstructor();
             assumedVal = constructor.construct(val);
 
             if (!verifier.verify(assumedVal)) {
