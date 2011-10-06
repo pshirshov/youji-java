@@ -124,12 +124,13 @@ public final class YaConfig {
 
     @SuppressWarnings("unchecked")
     public static <T> T get(final IConfigKey<T> key) {
-        Object val = config.getParsed();
-        if (null == val) {
+        if (null == config) {
             System.err.println(String.format(
                     "YaConfig: Config is not loaded. Use YaConfig.load() method"));
             return null;
         }
+
+        Object val = config.getParsed();
 
         for (String entry : key.getPath()) {
             if (val instanceof Map) {
