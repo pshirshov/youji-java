@@ -29,7 +29,7 @@ public abstract class SafeListTransformer<V, K>
         for (Object item : rawParsers) {
             try {
                 if (item == null
-                    || item.getClass() != sourceRef.getTypeClass()) {
+                    || item.getClass() == sourceRef.getTypeClass()) {
                     parsers.add(transform((V) item));
                 } else {
                     throw new IllegalArgumentException("incorrect type found");
