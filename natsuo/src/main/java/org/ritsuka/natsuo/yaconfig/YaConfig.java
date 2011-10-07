@@ -1,6 +1,5 @@
 package org.ritsuka.natsuo.yaconfig;
 
-import org.apache.commons.lang.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.BaseConstructor;
 
@@ -147,15 +146,10 @@ public final class YaConfig {
 
         T assumedVal;
         try {
-            IKeyVerifier<T> verifier = key.getVerifier();
             IConstructor<T> constructor = key.getConstructor();
             assumedVal = constructor.construct(val);
-
-            if (!verifier.verify(assumedVal)) {
-                String path = StringUtils.join(key.getPath().toArray());
-                throw new IllegalArgumentException(String.format("Parameter '%s' has invalid value", path));
-            }
         } catch (final ClassCastException e) {
+            //TODO: more detailed message
             throw new IllegalStateException(e);
         }
 

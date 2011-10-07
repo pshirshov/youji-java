@@ -21,8 +21,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class ConfigKey<T> implements IConfigKey<T> {
     private final List<String> keys = new ArrayList<String>();
     private final T defValue;
-    private final AtomicReference<IKeyVerifier<T>> verifier =
-            new AtomicReference<IKeyVerifier<T>>(new IKeyVerifier.True<T>());
     private final AtomicReference<IConstructor<T>> constructor =
             new AtomicReference<IConstructor<T>>(new IConstructor.Bypass<T>());
 
@@ -33,16 +31,6 @@ public final class ConfigKey<T> implements IConfigKey<T> {
     public ConfigKey(final String path, final T defaultValue) {
         this.defValue = defaultValue;
         initPath(path);
-    }
-
-    public IKeyVerifier<T> getVerifier(){
-        return verifier.get();
-    }
-
-    @Override
-    public IConfigKey<T> setVerifier(final IKeyVerifier<T> verifier) {
-        this.verifier.set(verifier);
-        return this;
     }
 
     @Override
