@@ -2,7 +2,7 @@ package org.ritsuka.youji;
 
 import org.ritsuka.natsuo.yaconfig.ConfigKey;
 import org.ritsuka.natsuo.yaconfig.IConfigKey;
-import org.ritsuka.natsuo.yaconfig.IKeyVerifier;
+import org.ritsuka.natsuo.yaconfig.TypedListTransformer;
 
 import java.net.URI;
 import java.util.List;
@@ -17,7 +17,7 @@ public final class Config {
 
     public static final IConfigKey<List<String>> INITIAL_ACCOUNTS =
             new ConfigKey<List<String>>("youji.initial-accounts")
-                .setVerifier(new IKeyVerifier.ListVerifier<String>() {});
+                    .setConstructor(new TypedListTransformer<String>());
 
     public static final IConfigKey<Integer> RECONNECT_INTERVAL =
             new ConfigKey<Integer>("youji.reconnect.interval");
